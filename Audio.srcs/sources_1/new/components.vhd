@@ -38,6 +38,11 @@ component DAC is
            PCM_IN : in pcm_data_t;
            DAC_OUT : out dac_out_t);
 end component;
+component DAC_DDC is
+    Port ( INPUT : in STD_LOGIC;
+           PCM_OUT : out pcm_data_t);
+end component;
+
 component Mixer is
     Port ( PCM_IN_VECT : in mix_pcm_vector_t;
            PCM_OUT : out pcm_data_t;
@@ -73,10 +78,15 @@ Generic (
            VOLUME : in volume_t;
            RESET : in STD_LOGIC);
 end component;
-component CEGEN48k is
-    Port ( gclk : in STD_LOGIC;
-           output : out STD_LOGIC;
-           enable : in STD_LOGIC;
-           reset : in STD_LOGIC);
+
+component CEGEN48k is    
+    Generic (
+        BIT_WIDTH : integer := 16
+    );
+    Port ( GCLK : in STD_LOGIC;
+           OUTPUT : out STD_LOGIC;
+           ENABLE : in STD_LOGIC;
+           TOP_VAL : in STD_LOGIC_VECTOR(BIT_WIDTH-1 downto 0);
+           RESET : in STD_LOGIC);
 end component;
 end package;

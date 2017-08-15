@@ -32,6 +32,7 @@ use IEEE.numeric_std.all;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 package typedefs is
+constant pcm_data_width : integer := 16;
 constant mix_channel_count : integer := 4;
     type wg_type_t is (
         wg_SINE, wg_SQUARE, wg_SAW, wg_TRIANGLE
@@ -42,7 +43,8 @@ constant mix_channel_count : integer := 4;
         filter_BIQUAD, filter_PASSTHROUGH
     );
     
-    subtype pcm_data_t is signed(15 downto 0);
+    subtype pcm_data_t is signed(pcm_data_width-1 downto 0);
+    function to_pcm_data_t(x: integer) return pcm_data_t;
     type mix_pcm_vector_t is array(mix_channel_count-1 downto 0) of pcm_data_t;
     
     subtype note_t is std_logic_vector(7 downto 0);
@@ -55,3 +57,10 @@ constant mix_channel_count : integer := 4;
     subtype dac_out_t is std_logic;
     
 end package;
+
+package body typedefs is
+    function to_pcm_data_t(x: integer) return pcm_data_t is
+    begin
+        return to_signed(x, pcm_data_width);
+    end to_pcm_data_t;
+end typedefs;
