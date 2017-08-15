@@ -8,7 +8,6 @@ entity TOP is
     Port ( gclk : in STD_LOGIC;
            dac_out : out STD_LOGIC;
            midi_rx : in STD_LOGIC;
-           midi_tx : out STD_LOGIC;
            reset : in STD_LOGIC;
            BTN : in STD_LOGIC_VECTOR (4 downto 0);
            SWITCHES : in STD_LOGIC_VECTOR (7 downto 0));
@@ -31,6 +30,8 @@ signal tg_note : note_vector_t;
 signal tg_volume : volume_vector_t;
 signal CLK : std_logic;
 signal ce48k : std_logic;
+signal uartEvent : std_logic;
+signal uartData : std_logic_vector(7 downto 0);
 
 begin
 clk_gen : clk_wiz_0 port map(clk_out1 => CLK, reset => reset, clk_in1 => gclk);

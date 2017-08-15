@@ -86,7 +86,7 @@ set_property PACKAGE_PIN Y9 [get_ports {GCLK}];  # "GCLK"
 # ----------------------------------------------------------------------------
 
 # Upper Row 
-set_property PACKAGE_PIN Y11  [get_ports {AUDIO_SIG}];  # "JA1" audio in
+set_property PACKAGE_PIN Y11  [get_ports {dac_out}];  # "JA1" audio in
 set_property PACKAGE_PIN AA11 [get_ports {AUDIO_GAIN}];  # "JA2" gain
 set_property PACKAGE_PIN Y10  [get_ports {AUDIO_NC}];  # "JA3"
 set_property PACKAGE_PIN AA9  [get_ports {AUDIO_SHDN}];  # "JA4" shutdown active low
@@ -211,7 +211,7 @@ set_property PACKAGE_PIN P16 [get_ports {BTN[0]}];  # "BTNC" push[0]
 set_property PACKAGE_PIN R16 [get_ports {BTN[1]}];  # "BTND" push[1]
 set_property PACKAGE_PIN N15 [get_ports {BTN[2]}];  # "BTNL" push[2]
 set_property PACKAGE_PIN R18 [get_ports {BTN[3]}];  # "BTNR" push[3]
-set_property PACKAGE_PIN T18 [get_ports {BTN[4]}];  # "BTNU" push[4]
+set_property PACKAGE_PIN T18 [get_ports {reset}];  # "BTNU" push[4]
 
 # ----------------------------------------------------------------------------
 # USB OTG Reset - Bank 34
