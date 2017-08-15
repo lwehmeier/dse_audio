@@ -21,6 +21,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -41,7 +42,7 @@ constant mix_channel_count : integer := 4;
         filter_BIQUAD, filter_PASSTHROUGH
     );
     
-    subtype pcm_data_t is std_logic_vector(15 downto 0);
+    subtype pcm_data_t is signed(15 downto 0);
     type mix_pcm_vector_t is array(mix_channel_count-1 downto 0) of pcm_data_t;
     
     subtype note_t is std_logic_vector(7 downto 0);
