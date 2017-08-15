@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:23 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Tue Aug 15 10:09:54 2017
+# Process ID: 9800
+# Current directory: D:/audio/Audio/Audio.runs/synth_1
+# Command line: vivado.exe -log TOP.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source TOP.tcl
+# Log file: D:/audio/Audio/Audio.runs/synth_1/TOP.vds
+# Journal file: D:/audio/Audio/Audio.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source TOP.tcl -notrace
