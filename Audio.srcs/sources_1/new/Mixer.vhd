@@ -21,6 +21,8 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
+USE ieee.math_real.all;
 use work.typedefs.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -41,7 +43,31 @@ entity Mixer is
 end Mixer;
 
 architecture Behavioral of Mixer is
-
+constant tree_depth : integer := INTEGER(CEIL(LOG2(REAL(mix_channel_count)))) -1;
+function tree_adder( data : mix_pcm_vector_t; num : unsigned(15 downto 0); depth : unsigned(7 downto 0)) return pcm_data_t is
+variable pcm_buffer : pcm_data_t;
 begin
-    PCM_OUT <= "0000000000000000";
+if depth = tree_depth then
+    pcm_buffer := data(to_integer(num))+data(to_integer(num)+1);
+else
+    pcm_buffer := tree_adder(data,num,depth+1)+tree_adder(data,num+to_unsigned(2**(tree_depth-to_integer(depth)),16),depth+1);
+end if;
+return pcm_buffer;
+end tree_adder;
+
+
+
+begin 
+process(clk)
+    variable pcm_buffer : pcm_data_t;
+begin
+    if rising_edge(CLK)
+    then
+        if CE='1'
+        then
+            pcm_buffer:=tree_adder(PCM_IN_VECT,to_unsigned(0,16),to_unsigned(0,8));
+            PCM_OUT<=pcm_buffer;
+        end if;
+    end if;
+end process;
 end Behavioral;
