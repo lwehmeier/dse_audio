@@ -32,6 +32,15 @@ use work.typedefs.all;
 --use UNISIM.VComponents.all;
 
 package components is
+
+component UART_RX_CTRL is
+    Port ( UART_RX : in  STD_LOGIC;
+           CLK : in  STD_LOGIC;
+           DATA : out  STD_LOGIC_VECTOR (7 downto 0);
+           READ_DATA : out  STD_LOGIC := '0'
+			  );
+end component;
+
 component DAC is
     Port ( CLK : in STD_LOGIC;
            CE : in STD_LOGIC;

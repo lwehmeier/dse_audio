@@ -30,14 +30,15 @@ signal tg_note : note_vector_t;
 signal tg_volume : volume_vector_t;
 signal CLK : std_logic;
 signal ce48k : std_logic;
-signal uartEvent : std_logic;
+signal uartDR : std_logic;
 signal uartData : std_logic_vector(7 downto 0);
 
 begin
-clk_gen : clk_wiz_0 port map(clk_out1 => CLK, reset => reset, clk_in1 => gclk);
-ce_gen : CEGEN48k generic map(BIT_WIDTH => 16) port map(GCLK => CLK, OUTPUT => ce48k, ENABLE => '1', RESET => reset, TOP_VAL => std_logic_vector(to_unsigned(2047,16)));
+clk_gen: clk_wiz_0 port map(clk_out1 => CLK, reset => reset, clk_in1 => gclk);
+rxUart: UART_RX_CTRL port map (CLK     => CLK, UART_RX => midi_rx, DATA => uartData, READ_DATA => uartDR);
+ce_gen: CEGEN48k generic map(BIT_WIDTH => 16) port map(GCLK => CLK, OUTPUT => ce48k, ENABLE => '1', RESET => reset, TOP_VAL => std_logic_vector(to_unsigned(2047,16)));
 wg_gen_loop : for i in 0 to mix_channel_count-1 generate
-    m_wg_x : waveformGen generic map (
+    m_wg_x: waveformGen generic map (
         wg_type => wg_types_vect(i)
     )
     Port map (
@@ -51,11 +52,10 @@ wg_gen_loop : for i in 0 to mix_channel_count-1 generate
 end generate wg_gen_loop;
 
 filter_gen_loop : for i in 0 to mix_channel_count-1 generate
-    m_wgfilter_x : filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => wg2filter(i), PCM_OUT => wgfilter2mix(i), CLK => CLK, CE => ce48k);
+    m_wgfilter_x: filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => wg2filter(i), PCM_OUT => wgfilter2mix(i), CLK => CLK, CE => ce48k);
 end generate filter_gen_loop;
 
-
-m_mix : Mixer port map (PCM_IN_VECT => wgfilter2mix,PCM_OUT=>mix2mixfilter,reset=>reset,CLK=>CLK,CE=>ce48k, ADD_MASK=>mixCtrl);
-m_mixfilter : filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => mix2mixfilter, PCM_OUT => mixfilter2dac, CLK => CLK, CE => ce48k);
-m_dac : DAC port map ( CLK=>CLK, CE => ce48k, PCM_IN => mixfilter2dac, DAC_OUT => dac_out);
+m_mix: Mixer port map (PCM_IN_VECT => wgfilter2mix,PCM_OUT=>mix2mixfilter,reset=>reset,CLK=>CLK,CE=>ce48k, ADD_MASK=>mixCtrl);
+m_mixfilter: filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => mix2mixfilter, PCM_OUT => mixfilter2dac, CLK => CLK, CE => ce48k);
+m_dac: DAC port map ( CLK=>CLK, CE => ce48k, PCM_IN => mixfilter2dac, DAC_OUT => dac_out);
 end Behavioral;

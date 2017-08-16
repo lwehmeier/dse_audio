@@ -2,208 +2,154 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:23 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Tue Aug 15 14:38:20 2017
-# Process ID: 13664
+# Start of session at: Wed Aug 16 10:07:10 2017
+# Process ID: 4544
 # Current directory: D:/audio2
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent14024 D:\audio2\Audio.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent15492 D:\audio2\Audio.xpr
 # Log file: D:/audio2/vivado.log
 # Journal file: D:/audio2\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project D:/audio2/Audio.xpr
-close [ open D:/audio2/Audio.srcs/sources_1/new/dacMixTest.vhd w ]
-add_files D:/audio2/Audio.srcs/sources_1/new/dacMixTest.vhd
-close [ open D:/audio2/Audio.srcs/sources_1/new/sinerom.vhd w ]
-add_files D:/audio2/Audio.srcs/sources_1/new/sinerom.vhd
-reset_run synth_1
-launch_runs synth_1 -jobs 4
-wait_on_run synth_1
+launch_simulation
+source DAC_Test.tcl
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+run 50 ns
+close_sim
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open D:/audio2/Audio.srcs/sim_1/new/uart_rx_test.vhd w ]
+add_files -fileset sim_1 D:/audio2/Audio.srcs/sim_1/new/uart_rx_test.vhd
+launch_simulation
+source DAC_Test.tcl
+run 50 ms
+close_sim
 # Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
 set_property source_mgmt_mode None [current_project]
-set_property top dacMixTest [current_fileset]
+set_property top uart_test [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
 # Re-enabling previously disabled source management mode.
 set_property source_mgmt_mode All [current_project]
+launch_simulation
+source uart_test.tcl
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+relaunch_sim
+relaunch_sim
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+run 100 us
+relaunch_sim
+run 1 ms
+relaunch_sim
+run 1 ms
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+close_sim
+launch_simulation
+launch_simulation
+launch_simulation
+launch_simulation
+source uart_test.tcl
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+add_wave {{/uart_test/uut/DELAY_DONE}} 
+add_wave {{/uart_test/uut/DATA}} 
+add_wave {{/uart_test/uut/RX_STATE}} 
+relaunch_sim
+run 105 us
+add_wave {{/uart_test/uut/DELAY_COUNTER}} 
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 ms
+relaunch_sim
+run 105 ms
+relaunch_sim
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+close_sim
+launch_simulation
+source uart_test.tcl
+close_sim
 reset_run clk_wiz_0_synth_1
-reset_run synth_1
-launch_runs synth_1 -jobs 4
-wait_on_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-reset_run synth_1
-launch_runs synth_1 -jobs 4
-wait_on_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-open_hw
-connect_hw_server
-open_hw_target
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-current_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-open_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-reset_run impl_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-close_hw
-close_design
-reset_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-open_hw
-reset_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-set_property target_language VHDL [current_project]
-set_property strategy Flow_RuntimeOptimized [get_runs synth_1]
-set_property strategy Flow_RuntimeOptimized [get_runs impl_1]
-reset_run synth_1
-launch_runs impl_1 -jobs 4
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-connect_hw_server
-open_hw_target
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-current_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-set_property strategy {Vivado Synthesis Defaults} [get_runs synth_1]
-set_property strategy {Vivado Implementation Defaults} [get_runs impl_1]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 4
-wait_on_run impl_1
-set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
-set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/dacMixTest.bit} [lindex [get_hw_devices xc7z020_1] 0]
-program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
-refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
-ipx::open_ipxact_file c:/Xilinx/Vivado/2016.4/data/ip/interfaces/uart_v1_0/uart.xml
-ipx::unload_abstraction_definition c:/Xilinx/Vivado/2016.4/data/ip/interfaces/uart_v1_0/uart_rtl.xml
-ipx::unload_bus_definition c:/Xilinx/Vivado/2016.4/data/ip/interfaces/uart_v1_0/uart.xml
-close [ open D:/audio2/Audio.srcs/sources_1/new/uart.vhd w ]
-add_files D:/audio2/Audio.srcs/sources_1/new/uart.vhd
 reset_run synth_1
 launch_runs synth_1 -jobs 4
 wait_on_run synth_1
