@@ -1,8 +1,37 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 14.08.2017 17:43:28
+-- Design Name: 
+-- Module Name: TOP - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
 use work.typedefs.all;
 use work.components.all;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
 
 entity TOP is
     Port ( gclk : in STD_LOGIC;
@@ -14,11 +43,6 @@ entity TOP is
 end TOP;
 
 architecture Behavioral of TOP is
-
-
-
-
-
 constant wg_types_vect : wg_type_vector_t := (wg_SINE, wg_SQUARE, wg_SAW, wg_TRIANGLE);
 
 signal wg2filter : mix_pcm_vector_t;
@@ -38,9 +62,8 @@ clk_gen: clk_wiz_0 port map(clk_out1 => CLK, reset => reset, clk_in1 => gclk);
 rxUart: UART_RX_CTRL port map (CLK     => CLK, UART_RX => midi_rx, DATA => uartData, READ_DATA => uartDR); --might need to fix baudrate and start bit?
 midi: midi_parser port map (CLK     => CLK, rxData => uartData,  newData => uartDR,volume => tg_volume, note => tg_note);
 ce_gen: CEGEN48k generic map(BIT_WIDTH => 16) port map(GCLK => CLK, OUTPUT => ce48k, ENABLE => '1', RESET => reset, TOP_VAL => std_logic_vector(to_unsigned(2047,16)));
-
 wg_gen_loop : for i in 0 to mix_channel_count-1 generate
-    m_wg_x: waveformGen generic map (
+    m_wg_x : waveformGen generic map (
         wg_type => wg_types_vect(i)
     )
     Port map (
@@ -54,10 +77,12 @@ wg_gen_loop : for i in 0 to mix_channel_count-1 generate
 end generate wg_gen_loop;
 
 filter_gen_loop : for i in 0 to mix_channel_count-1 generate
-    m_wgfilter_x: filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => wg2filter(i), PCM_OUT => wgfilter2mix(i), CLK => CLK, CE => ce48k);
+    m_wgfilter_x : filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => wg2filter(i), PCM_OUT => wgfilter2mix(i), CLK => CLK, CE => ce48k);
 end generate filter_gen_loop;
+
 
 m_mix: Mixer port map (PCM_IN_VECT => wgfilter2mix,PCM_OUT=>mix2mixfilter,reset=>reset,CLK=>CLK,CE=>ce48k, ADD_MASK=>mixCtrl);
 m_mixfilter: filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => mix2mixfilter, PCM_OUT => mixfilter2dac, CLK => CLK, CE => ce48k);
 m_dac: DAC port map ( CLK=>CLK, CE => ce48k, PCM_IN => mixfilter2dac, DAC_OUT => dac_out);
+
 end Behavioral;

@@ -25,17 +25,20 @@ use IEEE.numeric_std.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx leaf cells in this code.
 --library UNISIM;
 --use UNISIM.VComponents.all;
 package typedefs is
-constant pcm_data_width : integer := 16;
-constant mix_channel_count : integer := 4;
+    constant pcm_data_width: integer := 16;
+    constant mix_channel_count: integer := 4;
+    constant system_frequency: unsigned := to_unsigned(98304000, 32);
+    constant sample_rate: unsigned := to_unsigned(48000, 16);
+    
     type wg_type_t is (
-        wg_SINE, wg_SQUARE, wg_SAW, wg_TRIANGLE
+        wg_SQUARE, wg_TRIANGLE, wg_SAW, wg_NOISE, wg_SINE
     );
     type wg_type_vector_t is array(mix_channel_count-1 downto 0) of wg_type_t;
     
@@ -43,9 +46,11 @@ constant mix_channel_count : integer := 4;
         filter_BIQUAD, filter_PASSTHROUGH
     );
     
-    subtype pcm_data_t is signed(pcm_data_width-1 downto 0);
+    subtype pcm_data_t is signed(pcm_data_width - 1 downto 0);
     function to_pcm_data_t(x: integer) return pcm_data_t;
     type mix_pcm_vector_t is array(mix_channel_count-1 downto 0) of pcm_data_t;
+    constant pcm_min: integer := -32768;
+    constant pcm_max: integer := 32767;
     
     subtype note_t is std_logic_vector(7 downto 0);
     type note_vector_t is array(mix_channel_count-1 downto 0) of note_t;

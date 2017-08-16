@@ -25,29 +25,160 @@ use work.typedefs.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx leaf cells in this code.
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-
-
 entity waveformGen is
-Generic (
-    wg_type : wg_type_t := wg_SINE
-);
-    Port ( CLK : in STD_LOGIC;
-           CE : in STD_LOGIC;
-           PCM_OUT : out pcm_data_t;
-           NOTE : in note_t;
-           VOLUME : in volume_t;
-           RESET : in STD_LOGIC);
+    generic (
+        wg_type: wg_type_t := wg_SINE
+    );
+    port (
+        clk: in std_logic;
+        ce: in std_logic;
+        pcm_out: out pcm_data_t;
+        note: in note_t;
+        volume: in volume_t;
+        reset: in std_logic
+    );
 end waveformGen;
 
-architecture Behavioral of waveformGen is
-
+architecture behav of waveformGen is
+    signal counter: unsigned(sample_rate'length - 1 downto 0) := to_unsigned(0, sample_rate'length);
+    
+    component soundgen_square is
+        port (
+            clk: in std_logic;
+            ce: in std_logic;
+            pcm_out: out pcm_data_t;
+            note: in note_t;
+            volume: in volume_t;
+            counter: in unsigned(sample_rate'length - 1 downto 0);
+            reset: in std_logic
+        );
+    end component;
+    
+    component soundgen_triangle is
+        port (
+            clk: in std_logic;
+            ce: in std_logic;
+            pcm_out: out pcm_data_t;
+            note: in note_t;
+            volume: in volume_t;
+            counter: in unsigned(sample_rate'length - 1 downto 0);
+            reset: in std_logic
+        );
+    end component;
+    
+    component soundgen_saw is
+        port (
+            clk: in std_logic;
+            ce: in std_logic;
+            pcm_out: out pcm_data_t;
+            note: in note_t;
+            volume: in volume_t;
+            counter: in unsigned(sample_rate'length - 1 downto 0);
+            reset: in std_logic
+        );
+    end component;
+    
+    component soundgen_sine is
+        port (
+            clk: in std_logic;
+            ce: in std_logic;
+            pcm_out: out pcm_data_t;
+            note: in note_t;
+            volume: in volume_t;
+            counter: in unsigned(sample_rate'length - 1 downto 0);
+            reset: in std_logic
+        );
+    end component;
+    
+    component soundgen_noise is
+        port (
+            clk: in std_logic;
+            ce: in std_logic;
+            pcm_out: out pcm_data_t;
+            volume: in volume_t;
+            reset: in std_logic
+        );
+    end component;
 begin
-    PCM_OUT <= "0000000000000000";
-end Behavioral;
+    square_gen: if wg_type = wg_SQUARE generate
+        square: soundgen_square port map (
+            clk => clk,
+            ce => ce,
+            pcm_out => pcm_out,
+            note => note,
+            volume => volume,
+            counter => counter,
+            reset => reset
+        );
+    end generate square_gen;
+    
+    triangle_gen: if wg_type = wg_TRIANGLE generate
+        triangle: soundgen_triangle port map (
+            clk => clk,
+            ce => ce,
+            pcm_out => pcm_out,
+            note => note,
+            volume => volume,
+            counter => counter,
+            reset => reset
+        );
+    end generate triangle_gen;
+    
+    saw_gen: if wg_type = wg_SAW generate
+        saw: soundgen_saw port map (
+            clk => clk,
+            ce => ce,
+            pcm_out => pcm_out,
+            note => note,
+            volume => volume,
+            counter => counter,
+            reset => reset
+        );
+    end generate saw_gen;
+
+    noise_gen: if wg_type = wg_NOISE generate
+        noise: soundgen_noise port map (
+            clk => clk,
+            ce => ce,
+            pcm_out => pcm_out,
+            volume => volume,
+            reset => reset
+        );
+    end generate noise_gen;
+    
+    sine_gen: if wg_type = wg_SINE generate
+        sine: soundgen_sine port map (
+            clk => clk,
+            ce => ce,
+            pcm_out => pcm_out,
+            note => note,
+            volume => volume,
+            counter => counter,
+            reset => reset
+        );
+    end generate sine_gen;
+
+    process (clk)
+    begin
+        if rising_edge(clk) then
+            if ce = '1' then
+                if counter < sample_rate then
+                    counter <= counter + 1;
+                else
+                    counter <= to_unsigned(0, sample_rate'length);
+                end if;
+            end if;
+        
+            if reset = '1' then
+                counter <= to_unsigned(0, sample_rate'length);
+            end if;
+        end if;
+    end process;
+end behav;
