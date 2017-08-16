@@ -49,9 +49,12 @@ constant mix_channel_count : integer := 4;
     
     subtype note_t is std_logic_vector(7 downto 0);
     type note_vector_t is array(mix_channel_count-1 downto 0) of note_t;
+    constant note_empty : note_t := x"00";
     
     subtype volume_t is std_logic_vector(7 downto 0);
     type volume_vector_t is array(mix_channel_count-1 downto 0) of volume_t;
+    constant volume_zero : volume_t := x"00";
+    function to_volume_t(x: integer) return volume_t;
     
     subtype add_mask_t is std_logic_vector(mix_channel_count-1 downto 0);
     subtype dac_out_t is std_logic;
@@ -63,4 +66,9 @@ package body typedefs is
     begin
         return to_signed(x, pcm_data_width);
     end to_pcm_data_t;
+    
+    function to_volume_t(x: integer) return volume_t is
+    begin
+        return std_logic_vector(to_unsigned(x, volume_t'length));
+    end to_volume_t;
 end typedefs;

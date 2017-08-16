@@ -20,15 +20,17 @@ signal COUNT : unsigned(BIT_WIDTH-1 downto 0) := to_unsigned(0, BIT_WIDTH);
 begin
 process(GCLK)
 begin
-    if rising_edge(GCLK) and ENABLE='1' then
+    if rising_edge(GCLK) then
         if count = unsigned(TOP_VAL) then
             count <= to_unsigned(0, BIT_WIDTH);
             OUTPUT <= '1';
         else
             OUTPUT <= '0';
-            COUNT <= COUNT + to_unsigned(1, BIT_WIDTH);
+            if ENABLE='1' then
+                COUNT <= COUNT + to_unsigned(1, BIT_WIDTH);
+            end if;
         end if;
-        if RESET='1'
+        if RESET='1' -- reset synchronous to GCLK
         then
             COUNT <= to_unsigned(0, BIT_WIDTH);
         end if;

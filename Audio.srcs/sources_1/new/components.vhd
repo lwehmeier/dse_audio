@@ -105,4 +105,31 @@ component CEGEN48k is
            TOP_VAL : in STD_LOGIC_VECTOR(BIT_WIDTH-1 downto 0);
            RESET : in STD_LOGIC);
 end component;
+
+component Envelope is
+    Port (
+        -- Clock sources 
+        CLK     : in STD_LOGIC;  -- System Clock
+        SR      : in STD_LOGIC;  -- Sample Rate
+        NOTE    : in STD_LOGIC;  -- New note can be sampled
+        RESET   : in STD_LOGIC;  -- Reset the state machine, synchronous to system clock
+        
+        -- Tone related
+        -- the resolution for times is 2.66ms per step
+        -- TODO: Maybe add a lookup table to have exponential time steps
+        NOTE_IN        : in note_t;                         -- Note Input
+        SUSTAIN_VOLUME : in volume_t;                       -- Sustain volume
+        ATTACK_TIME    : in std_logic_vector(7 downto 0);   -- Attack time
+        ATTACK_VOLUME  : in volume_t;                       -- Peak volume
+        DECAY_TIME     : in std_logic_vector(7 downto 0);   -- Decay time
+        RELEASE_TIME   : in std_logic_vector(7 downto 0);   -- Release time
+        ATTACK_INCREASE  : in volume_t;                       -- Volume per attack step to add
+        DECAY_DECREASE   : in volume_t;                       -- Volume per decay step to subtract
+        RELEASE_DECREASE : in volume_t;                       -- Volume per release step to subtract
+        
+        -- Output volume
+        VOL_OUT  : out volume_t;   -- Volume Output
+        NOTE_OUT : out note_t     -- Note Output, used to "hold" the note for the release time.  
+    );
+end component;
 end package;
