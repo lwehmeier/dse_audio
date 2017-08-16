@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="uart_midi_test_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="components" />
+            <top_module name="typedefs" />
+            <top_module name="uart_midi_test" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="12001000000000fs"></ZoomEndTime>
+      <Cursor1Time time="12001000000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="100"></NameColumnWidth>
+      <ValueColumnWidth column_width="64"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="12" />
+   <wvobject fp_name="/uart_midi_test/GCLK" type="logic">
+      <obj_property name="ElementShortName">GCLK</obj_property>
+      <obj_property name="ObjectShortName">GCLK</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/CE" type="logic">
+      <obj_property name="ElementShortName">CE</obj_property>
+      <obj_property name="ObjectShortName">CE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/PCM_DATA" type="array">
+      <obj_property name="ElementShortName">PCM_DATA[15:0]</obj_property>
+      <obj_property name="ObjectShortName">PCM_DATA[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/ENABLE" type="logic">
+      <obj_property name="ElementShortName">ENABLE</obj_property>
+      <obj_property name="ObjectShortName">ENABLE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/DAC_OUT" type="logic">
+      <obj_property name="ElementShortName">DAC_OUT</obj_property>
+      <obj_property name="ObjectShortName">DAC_OUT</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/rx" type="logic">
+      <obj_property name="ElementShortName">rx</obj_property>
+      <obj_property name="ObjectShortName">rx</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/rxdata" type="array">
+      <obj_property name="ElementShortName">rxdata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rxdata[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/note" type="array">
+      <obj_property name="ElementShortName">note[7:0]</obj_property>
+      <obj_property name="ObjectShortName">note[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/volume" type="array">
+      <obj_property name="ElementShortName">volume[7:0]</obj_property>
+      <obj_property name="ObjectShortName">volume[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/dready" type="logic">
+      <obj_property name="ElementShortName">dready</obj_property>
+      <obj_property name="ObjectShortName">dready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/uut/noteOff" type="logic">
+      <obj_property name="ElementShortName">noteOff</obj_property>
+      <obj_property name="ObjectShortName">noteOff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uart_midi_test/uut/rxData" type="array">
+      <obj_property name="ElementShortName">rxData[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rxData[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+</wave_config>
