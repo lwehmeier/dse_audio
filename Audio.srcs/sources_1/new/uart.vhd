@@ -47,7 +47,7 @@ constant BIT_INDEX_MAX : natural := 8;
 
 --flag to indicate to move from the delay RXState to the next state
 signal DELAY_DONE : std_logic := '0';
-signal DELAY_COUNTER : std_logic_vector(16 downto 0) := (others => '0');
+signal DELAY_COUNTER : std_logic_vector(13 downto 0) := (others => '0');
 
 --flad to indicate that it is time to read the next bit
 signal GET_BIT_DONE : std_logic := '0';
