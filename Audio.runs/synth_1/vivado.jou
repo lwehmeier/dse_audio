@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:23 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Wed Aug 16 11:15:42 2017
-# Process ID: 3484
+# Start of session at: Wed Aug 16 12:50:03 2017
+# Process ID: 14496
 # Current directory: D:/audio2/Audio.runs/synth_1
 # Command line: vivado.exe -log dacMixTest.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source dacMixTest.tcl
 # Log file: D:/audio2/Audio.runs/synth_1/dacMixTest.vds

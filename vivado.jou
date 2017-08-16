@@ -153,3 +153,82 @@ reset_run clk_wiz_0_synth_1
 reset_run synth_1
 launch_runs synth_1 -jobs 4
 wait_on_run synth_1
+close [ open D:/audio2/Audio.srcs/sources_1/new/midi_parser.vhd w ]
+add_files D:/audio2/Audio.srcs/sources_1/new/midi_parser.vhd
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open D:/audio2/Audio.srcs/sim_1/new/uart_midi_test.vhd w ]
+add_files -fileset sim_1 D:/audio2/Audio.srcs/sim_1/new/uart_midi_test.vhd
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top uart_midi_test [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+launch_simulation
+launch_simulation
+launch_simulation
+source uart_midi_test.tcl
+run 105 us
+run 105 us
+run 105 us
+run 105 us
+run 1 ms
+run 1 ms
+run 1 ms
+close_sim
+launch_simulation
+source uart_midi_test.tcl
+run 1 ms
+run 1 ms
+run 1 ms
+run 1 ms
+add_wave {{/uart_midi_test/uut/noteOff}} 
+add_wave {{/uart_midi_test/uut/rxData}} 
+relaunch_sim
+run 1 ms
+run 1 ms
+run 1 ms
+run 1 ms
+relaunch_sim
+run 1 ms
+run 1 ms
+relaunch_sim
+run 1 ms
+run 1 ms
+run 1 ms
+run 1 ms
+run 1 ms
+relaunch_sim
+run 5 ms
+relaunch_sim
+run 5 ms
+relaunch_sim
+run 5 ms
+relaunch_sim
+run 6 ms
+relaunch_sim
+run 6 ms
+relaunch_sim
+run 6 ms
+relaunch_sim
+run 6 ms
+relaunch_sim
+run 6 ms
+relaunch_sim
+run 6 ms
+run 6 ms
+relaunch_sim
+run 6 ms
+run 6 ms
+save_wave_config {D:/audio2/uart_midi_test_behav.wcfg}
+add_files -fileset sim_1 -norecurse D:/audio2/uart_midi_test_behav.wcfg
+set_property xsim.view D:/audio2/uart_midi_test_behav.wcfg [get_filesets sim_1]
+close_sim
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+launch_runs impl_1 -jobs 4
+wait_on_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
