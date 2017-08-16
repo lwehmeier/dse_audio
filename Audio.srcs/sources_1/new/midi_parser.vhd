@@ -22,7 +22,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
-
+use work.typedefs.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -35,8 +35,8 @@ use ieee.numeric_std.all;
 entity midi_parser is
     Port ( rxData : in STD_LOGIC_VECTOR (7 downto 0);
            newData : in STD_LOGIC;
-           note : out STD_LOGIC_VECTOR (7 downto 0);
-           volume : out STD_LOGIC_VECTOR (7 downto 0);
+           note : out note_vector_t;
+           volume : out volume_vector_t;
            clk : in STD_LOGIC);
     type state_t is (STATE_CMD,STATE_BYTE1, STATE_BYTE2);  
 end midi_parser;
@@ -46,6 +46,7 @@ signal cstate : state_t := STATE_CMD;
 signal parsedPitch : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigned(0,8));
 signal parsedVelocity : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigned(0,8));
 signal noteOff : std_logic := '0';
+signal currentChannel : unsigned(2 downto 0);
 begin
 
 statemachine : process (CLK)
@@ -53,7 +54,7 @@ begin
     if rising_edge(clk) and newData='1' then
         case cstate is
             when STATE_CMD => 
-                if rxData(3 downto 0) = "0000" then --ch 0
+                    currentChannel <= unsigned(rxData(2 downto 0));
                     if rxData(7 downto 4) = "1001" then
                         cstate <= STATE_BYTE1;
                         noteOff<='0';
@@ -61,11 +62,10 @@ begin
                         cstate <= STATE_BYTE1;
                         noteOff<='1';
                     end if;
-                end if;
                 
                 when STATE_BYTE1 =>
                     cstate<=STATE_BYTE2;
-                    parsedPitch<=std_logic_vector(to_unsigned(0,8));
+                    parsedPitch<=note_empty;
                     if noteOff='0' then
                         if rxData(7) = '0' then
                             parsedPitch <= rxData;
@@ -75,16 +75,16 @@ begin
 
                 when STATE_BYTE2 =>
                     cstate<=STATE_CMD;
-                    parsedVelocity<=std_logic_vector(to_unsigned(0,8));
+                    parsedVelocity<=volume_zero;
                     if noteOff='0' then
                         if rxData(7) = '0' then
                             parsedVelocity <= rxData;
-                            volume <= rxData;
+                            volume(to_integer(currentChannel)) <= rxData;
                         end if;
                     else
-                        volume <=std_logic_vector(to_unsigned(0,8));
+                        volume(to_integer(currentChannel)) <=volume_zero;
                     end if;
-                    note <= parsedPitch;
+                    note(to_integer(currentChannel)) <= parsedPitch;
                 
                 when others => cstate <= STATE_CMD;
         end case;

@@ -1,8 +1,8 @@
 Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2016.4 (win64) Build 1756540 Mon Jan 23 19:11:23 MST 2017
-| Date         : Tue Aug 15 10:11:19 2017
-| Host         : HTI16 running 64-bit major release  (build 9200)
+| Date         : Wed Aug 16 15:08:16 2017
+| Host         : HTI14 running 64-bit major release  (build 9200)
 | Command      : report_timing_summary -warn_on_violation -max_paths 10 -file TOP_timing_summary_routed.rpt -rpx TOP_timing_summary_routed.rpx
 | Design       : TOP
 | Device       : 7z020-clg484
@@ -81,7 +81,7 @@ Table of Contents
 
 6. checking no_output_delay
 ---------------------------
- There are 0 ports with no output delay specified.
+ There is 1 port with no output delay specified. (HIGH)
 
  There are 0 ports with no output delay but user has a false path constraint
 
@@ -126,7 +126,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-         NA           NA                     NA                   NA           NA           NA                     NA                   NA           NA           NA                      NA                    NA  
+      7.258        0.000                      0                   16        0.236        0.000                      0                   16        3.000        0.000                       0                    22  
 
 
 All user specified timing constraints are met.
@@ -137,9 +137,11 @@ All user specified timing constraints are met.
 | -------------
 ------------------------------------------------------------------------------------------------
 
-Clock  Waveform(ns)       Period(ns)      Frequency(MHz)
------  ------------       ----------      --------------
-gclk   {0.000 5.000}      10.000          100.000         
+Clock                 Waveform(ns)       Period(ns)      Frequency(MHz)
+-----                 ------------       ----------      --------------
+gclk                  {0.000 5.000}      10.000          100.000         
+  clk_out1_clk_wiz_0  {0.000 5.086}      10.172          98.305          
+  clkfbout_clk_wiz_0  {0.000 5.000}      10.000          100.000         
 
 
 ------------------------------------------------------------------------------------------------
@@ -147,8 +149,11 @@ gclk   {0.000 5.000}      10.000          100.000
 | -----------------
 ------------------------------------------------------------------------------------------------
 
-Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
------             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+Clock                     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+-----                     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+gclk                                                                                                                                                                    3.000        0.000                       0                     1  
+  clk_out1_clk_wiz_0        7.258        0.000                      0                   16        0.236        0.000                      0                   16        4.586        0.000                       0                    18  
+  clkfbout_clk_wiz_0                                                                                                                                                    7.845        0.000                       0                     3  
 
 
 ------------------------------------------------------------------------------------------------
@@ -173,5 +178,1432 @@ Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing 
 | Timing Details
 | --------------
 ------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+From Clock:  gclk
+  To Clock:  gclk
+
+Setup :           NA  Failing Endpoints,  Worst Slack           NA  ,  Total Violation           NA
+Hold  :           NA  Failing Endpoints,  Worst Slack           NA  ,  Total Violation           NA
+PW    :            0  Failing Endpoints,  Worst Slack        3.000ns,  Total Violation        0.000ns
+---------------------------------------------------------------------------------------------------
+
+
+Pulse Width Checks
+--------------------------------------------------------------------------------------
+Clock Name:         gclk
+Waveform(ns):       { 0.000 5.000 }
+Period(ns):         10.000
+Sources:            { gclk }
+
+Check Type        Corner  Lib Pin            Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location         Pin
+Min Period        n/a     MMCME2_ADV/CLKIN1  n/a            1.249         10.000      8.751      MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKIN1
+Max Period        n/a     MMCME2_ADV/CLKIN1  n/a            100.000       10.000      90.000     MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKIN1
+Low Pulse Width   Slow    MMCME2_ADV/CLKIN1  n/a            2.000         5.000       3.000      MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKIN1
+Low Pulse Width   Fast    MMCME2_ADV/CLKIN1  n/a            2.000         5.000       3.000      MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKIN1
+High Pulse Width  Slow    MMCME2_ADV/CLKIN1  n/a            2.000         5.000       3.000      MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKIN1
+High Pulse Width  Fast    MMCME2_ADV/CLKIN1  n/a            2.000         5.000       3.000      MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKIN1
+
+
+
+---------------------------------------------------------------------------------------------------
+From Clock:  clk_out1_clk_wiz_0
+  To Clock:  clk_out1_clk_wiz_0
+
+Setup :            0  Failing Endpoints,  Worst Slack        7.258ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.236ns,  Total Violation        0.000ns
+PW    :            0  Failing Endpoints,  Worst Slack        4.586ns,  Total Violation        0.000ns
+---------------------------------------------------------------------------------------------------
+
+
+Max Delay Paths
+--------------------------------------------------------------------------------------
+Slack (MET) :             7.258ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[14]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.942ns  (logic 1.732ns (58.871%)  route 1.210ns (41.129%))
+  Logic Levels:           5  (CARRY4=4 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.424ns = ( 8.748 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.640ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.717 r  m_dac/ACCUMULATOR0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     1.717    m_dac/ACCUMULATOR0_carry__0_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.834 r  m_dac/ACCUMULATOR0_carry__1/CO[3]
+                         net (fo=1, routed)           0.000     1.834    m_dac/ACCUMULATOR0_carry__1_n_0
+    SLICE_X0Y33          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.323     2.157 r  m_dac/ACCUMULATOR0_carry__2/O[1]
+                         net (fo=1, routed)           0.000     2.157    m_dac/ACCUMULATOR0_carry__2_n_6
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[14]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.649     8.748    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[14]/C
+                         clock pessimism              0.640     9.388    
+                         clock uncertainty           -0.082     9.306    
+    SLICE_X0Y33          FDRE (Setup_fdre_C_D)        0.109     9.415    m_dac/ACCUMULATOR_reg[14]
+  -------------------------------------------------------------------
+                         required time                          9.415    
+                         arrival time                          -2.157    
+  -------------------------------------------------------------------
+                         slack                                  7.258    
+
+Slack (MET) :             7.342ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[15]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.858ns  (logic 1.648ns (57.662%)  route 1.210ns (42.338%))
+  Logic Levels:           5  (CARRY4=4 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.424ns = ( 8.748 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.640ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.717 r  m_dac/ACCUMULATOR0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     1.717    m_dac/ACCUMULATOR0_carry__0_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.834 r  m_dac/ACCUMULATOR0_carry__1/CO[3]
+                         net (fo=1, routed)           0.000     1.834    m_dac/ACCUMULATOR0_carry__1_n_0
+    SLICE_X0Y33          CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.239     2.073 r  m_dac/ACCUMULATOR0_carry__2/O[2]
+                         net (fo=1, routed)           0.000     2.073    m_dac/ACCUMULATOR0_carry__2_n_5
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.649     8.748    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+                         clock pessimism              0.640     9.388    
+                         clock uncertainty           -0.082     9.306    
+    SLICE_X0Y33          FDRE (Setup_fdre_C_D)        0.109     9.415    m_dac/ACCUMULATOR_reg[15]
+  -------------------------------------------------------------------
+                         required time                          9.415    
+                         arrival time                          -2.073    
+  -------------------------------------------------------------------
+                         slack                                  7.342    
+
+Slack (MET) :             7.350ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[10]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.825ns  (logic 1.615ns (57.167%)  route 1.210ns (42.833%))
+  Logic Levels:           4  (CARRY4=3 LUT3=1)
+  Clock Path Skew:        -0.025ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.425ns = ( 8.747 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.616ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.717 r  m_dac/ACCUMULATOR0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     1.717    m_dac/ACCUMULATOR0_carry__0_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.323     2.040 r  m_dac/ACCUMULATOR0_carry__1/O[1]
+                         net (fo=1, routed)           0.000     2.040    m_dac/ACCUMULATOR0_carry__1_n_6
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[10]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.648     8.747    m_dac/CLK
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[10]/C
+                         clock pessimism              0.616     9.363    
+                         clock uncertainty           -0.082     9.281    
+    SLICE_X0Y32          FDRE (Setup_fdre_C_D)        0.109     9.390    m_dac/ACCUMULATOR_reg[10]
+  -------------------------------------------------------------------
+                         required time                          9.390    
+                         arrival time                          -2.040    
+  -------------------------------------------------------------------
+                         slack                                  7.350    
+
+Slack (MET) :             7.358ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[12]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.817ns  (logic 1.607ns (57.046%)  route 1.210ns (42.954%))
+  Logic Levels:           4  (CARRY4=3 LUT3=1)
+  Clock Path Skew:        -0.025ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.425ns = ( 8.747 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.616ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.717 r  m_dac/ACCUMULATOR0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     1.717    m_dac/ACCUMULATOR0_carry__0_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.315     2.032 r  m_dac/ACCUMULATOR0_carry__1/O[3]
+                         net (fo=1, routed)           0.000     2.032    m_dac/ACCUMULATOR0_carry__1_n_4
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[12]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.648     8.747    m_dac/CLK
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[12]/C
+                         clock pessimism              0.616     9.363    
+                         clock uncertainty           -0.082     9.281    
+    SLICE_X0Y32          FDRE (Setup_fdre_C_D)        0.109     9.390    m_dac/ACCUMULATOR_reg[12]
+  -------------------------------------------------------------------
+                         required time                          9.390    
+                         arrival time                          -2.032    
+  -------------------------------------------------------------------
+                         slack                                  7.358    
+
+Slack (MET) :             7.362ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[13]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.838ns  (logic 1.628ns (57.364%)  route 1.210ns (42.636%))
+  Logic Levels:           5  (CARRY4=4 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.424ns = ( 8.748 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.640ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.717 r  m_dac/ACCUMULATOR0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     1.717    m_dac/ACCUMULATOR0_carry__0_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.834 r  m_dac/ACCUMULATOR0_carry__1/CO[3]
+                         net (fo=1, routed)           0.000     1.834    m_dac/ACCUMULATOR0_carry__1_n_0
+    SLICE_X0Y33          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219     2.053 r  m_dac/ACCUMULATOR0_carry__2/O[0]
+                         net (fo=1, routed)           0.000     2.053    m_dac/ACCUMULATOR0_carry__2_n_7
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.649     8.748    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[13]/C
+                         clock pessimism              0.640     9.388    
+                         clock uncertainty           -0.082     9.306    
+    SLICE_X0Y33          FDRE (Setup_fdre_C_D)        0.109     9.415    m_dac/ACCUMULATOR_reg[13]
+  -------------------------------------------------------------------
+                         required time                          9.415    
+                         arrival time                          -2.053    
+  -------------------------------------------------------------------
+                         slack                                  7.362    
+
+Slack (MET) :             7.434ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[11]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.741ns  (logic 1.531ns (55.855%)  route 1.210ns (44.145%))
+  Logic Levels:           4  (CARRY4=3 LUT3=1)
+  Clock Path Skew:        -0.025ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.425ns = ( 8.747 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.616ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.717 r  m_dac/ACCUMULATOR0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     1.717    m_dac/ACCUMULATOR0_carry__0_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.239     1.956 r  m_dac/ACCUMULATOR0_carry__1/O[2]
+                         net (fo=1, routed)           0.000     1.956    m_dac/ACCUMULATOR0_carry__1_n_5
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[11]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.648     8.747    m_dac/CLK
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[11]/C
+                         clock pessimism              0.616     9.363    
+                         clock uncertainty           -0.082     9.281    
+    SLICE_X0Y32          FDRE (Setup_fdre_C_D)        0.109     9.390    m_dac/ACCUMULATOR_reg[11]
+  -------------------------------------------------------------------
+                         required time                          9.390    
+                         arrival time                          -1.956    
+  -------------------------------------------------------------------
+                         slack                                  7.434    
+
+Slack (MET) :             7.454ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[9]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.721ns  (logic 1.511ns (55.530%)  route 1.210ns (44.470%))
+  Logic Levels:           4  (CARRY4=3 LUT3=1)
+  Clock Path Skew:        -0.025ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.425ns = ( 8.747 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.616ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     1.717 r  m_dac/ACCUMULATOR0_carry__0/CO[3]
+                         net (fo=1, routed)           0.000     1.717    m_dac/ACCUMULATOR0_carry__0_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.219     1.936 r  m_dac/ACCUMULATOR0_carry__1/O[0]
+                         net (fo=1, routed)           0.000     1.936    m_dac/ACCUMULATOR0_carry__1_n_7
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[9]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.648     8.747    m_dac/CLK
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[9]/C
+                         clock pessimism              0.616     9.363    
+                         clock uncertainty           -0.082     9.281    
+    SLICE_X0Y32          FDRE (Setup_fdre_C_D)        0.109     9.390    m_dac/ACCUMULATOR_reg[9]
+  -------------------------------------------------------------------
+                         required time                          9.390    
+                         arrival time                          -1.936    
+  -------------------------------------------------------------------
+                         slack                                  7.454    
+
+Slack (MET) :             7.465ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[6]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.708ns  (logic 1.498ns (55.317%)  route 1.210ns (44.683%))
+  Logic Levels:           3  (CARRY4=2 LUT3=1)
+  Clock Path Skew:        -0.027ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.427ns = ( 8.745 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.616ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.323     1.923 r  m_dac/ACCUMULATOR0_carry__0/O[1]
+                         net (fo=1, routed)           0.000     1.923    m_dac/ACCUMULATOR0_carry__0_n_6
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[6]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.646     8.745    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[6]/C
+                         clock pessimism              0.616     9.361    
+                         clock uncertainty           -0.082     9.279    
+    SLICE_X0Y31          FDRE (Setup_fdre_C_D)        0.109     9.388    m_dac/ACCUMULATOR_reg[6]
+  -------------------------------------------------------------------
+                         required time                          9.388    
+                         arrival time                          -1.923    
+  -------------------------------------------------------------------
+                         slack                                  7.465    
+
+Slack (MET) :             7.473ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[8]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.700ns  (logic 1.490ns (55.184%)  route 1.210ns (44.816%))
+  Logic Levels:           3  (CARRY4=2 LUT3=1)
+  Clock Path Skew:        -0.027ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.427ns = ( 8.745 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.616ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.315     1.915 r  m_dac/ACCUMULATOR0_carry__0/O[3]
+                         net (fo=1, routed)           0.000     1.915    m_dac/ACCUMULATOR0_carry__0_n_4
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[8]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.646     8.745    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[8]/C
+                         clock pessimism              0.616     9.361    
+                         clock uncertainty           -0.082     9.279    
+    SLICE_X0Y31          FDRE (Setup_fdre_C_D)        0.109     9.388    m_dac/ACCUMULATOR_reg[8]
+  -------------------------------------------------------------------
+                         required time                          9.388    
+                         arrival time                          -1.915    
+  -------------------------------------------------------------------
+                         slack                                  7.473    
+
+Slack (MET) :             7.549ns  (required time - arrival time)
+  Source:                 m_dac/ACCUMULATOR_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[7]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.172ns  (clk_out1_clk_wiz_0 rise@10.172ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        2.624ns  (logic 1.414ns (53.886%)  route 1.210ns (46.114%))
+  Logic Levels:           3  (CARRY4=2 LUT3=1)
+  Clock Path Skew:        -0.027ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.427ns = ( 8.745 - 10.172 ) 
+    Source Clock Delay      (SCD):    -0.785ns
+    Clock Pessimism Removal (CPR):    0.616ns
+  Clock Uncertainty:      0.082ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.147ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.490     1.490 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.775    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.343    -4.568 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.855    -2.713    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101    -2.612 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.827    -0.785    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.518    -0.267 r  m_dac/ACCUMULATOR_reg[15]/Q
+                         net (fo=32, routed)          1.210     0.943    m_dac/INPUT
+    SLICE_X0Y30          LUT3 (Prop_lut3_I2_O)        0.124     1.067 r  m_dac/ACCUMULATOR0_carry_i_7/O
+                         net (fo=1, routed)           0.000     1.067    m_dac/ACCUMULATOR0_carry_i_7_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     1.600 r  m_dac/ACCUMULATOR0_carry/CO[3]
+                         net (fo=1, routed)           0.000     1.600    m_dac/ACCUMULATOR0_carry_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.239     1.839 r  m_dac/ACCUMULATOR0_carry__0/O[2]
+                         net (fo=1, routed)           0.000     1.839    m_dac/ACCUMULATOR0_carry__0_n_5
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[7]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                     10.172    10.172 r  
+    Y9                                                0.000    10.172 r  gclk (IN)
+                         net (fo=0)                   0.000    10.172    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         1.420    11.592 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    12.754    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.438     5.317 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.691     7.008    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091     7.099 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          1.646     8.745    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[7]/C
+                         clock pessimism              0.616     9.361    
+                         clock uncertainty           -0.082     9.279    
+    SLICE_X0Y31          FDRE (Setup_fdre_C_D)        0.109     9.388    m_dac/ACCUMULATOR_reg[7]
+  -------------------------------------------------------------------
+                         required time                          9.388    
+                         arrival time                          -1.839    
+  -------------------------------------------------------------------
+                         slack                                  7.549    
+
+
+
+
+
+Min Delay Paths
+--------------------------------------------------------------------------------------
+Slack (MET) :             0.236ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[2]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.383ns  (logic 0.284ns (74.105%)  route 0.099ns (25.895%))
+  Logic Levels:           2  (CARRY4=1 LUT2=1)
+  Clock Path Skew:        0.013ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.802ns
+    Source Clock Delay      (SCD):    -0.564ns
+    Clock Pessimism Removal (CPR):    -0.251ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.615    -0.564    m_dac/CLK
+    SLICE_X1Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y30          FDRE (Prop_fdre_C_Q)         0.141    -0.423 r  m_dac/ACCUMULATOR_reg[0]/Q
+                         net (fo=4, routed)           0.099    -0.323    m_dac/ACCUMULATOR_reg_n_0_[0]
+    SLICE_X0Y30          LUT2 (Prop_lut2_I1_O)        0.048    -0.275 r  m_dac/ACCUMULATOR0_carry_i_4/O
+                         net (fo=1, routed)           0.000    -0.275    m_dac/ACCUMULATOR0_carry_i_4_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_DI[0]_O[1])
+                                                      0.095    -0.180 r  m_dac/ACCUMULATOR0_carry/O[1]
+                         net (fo=1, routed)           0.000    -0.180    m_dac/ACCUMULATOR0_carry_n_6
+    SLICE_X0Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[2]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.883    -0.802    m_dac/CLK
+    SLICE_X0Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[2]/C
+                         clock pessimism              0.251    -0.551    
+    SLICE_X0Y30          FDRE (Hold_fdre_C_D)         0.134    -0.417    m_dac/ACCUMULATOR_reg[2]
+  -------------------------------------------------------------------
+                         required time                          0.417    
+                         arrival time                          -0.180    
+  -------------------------------------------------------------------
+                         slack                                  0.236    
+
+Slack (MET) :             0.267ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[3]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.414ns  (logic 0.315ns (76.043%)  route 0.099ns (23.957%))
+  Logic Levels:           2  (CARRY4=1 LUT2=1)
+  Clock Path Skew:        0.013ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.802ns
+    Source Clock Delay      (SCD):    -0.564ns
+    Clock Pessimism Removal (CPR):    -0.251ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.615    -0.564    m_dac/CLK
+    SLICE_X1Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X1Y30          FDRE (Prop_fdre_C_Q)         0.141    -0.423 r  m_dac/ACCUMULATOR_reg[0]/Q
+                         net (fo=4, routed)           0.099    -0.323    m_dac/ACCUMULATOR_reg_n_0_[0]
+    SLICE_X0Y30          LUT2 (Prop_lut2_I1_O)        0.048    -0.275 r  m_dac/ACCUMULATOR0_carry_i_4/O
+                         net (fo=1, routed)           0.000    -0.275    m_dac/ACCUMULATOR0_carry_i_4_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_DI[0]_O[2])
+                                                      0.126    -0.149 r  m_dac/ACCUMULATOR0_carry/O[2]
+                         net (fo=1, routed)           0.000    -0.149    m_dac/ACCUMULATOR0_carry_n_5
+    SLICE_X0Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[3]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.883    -0.802    m_dac/CLK
+    SLICE_X0Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[3]/C
+                         clock pessimism              0.251    -0.551    
+    SLICE_X0Y30          FDRE (Hold_fdre_C_D)         0.134    -0.417    m_dac/ACCUMULATOR_reg[3]
+  -------------------------------------------------------------------
+                         required time                          0.417    
+                         arrival time                          -0.149    
+  -------------------------------------------------------------------
+                         slack                                  0.267    
+
+Slack (MET) :             0.288ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[8]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[8]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.422ns  (logic 0.273ns (64.655%)  route 0.149ns (35.345%))
+  Logic Levels:           2  (CARRY4=1 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.801ns
+    Source Clock Delay      (SCD):    -0.563ns
+    Clock Pessimism Removal (CPR):    -0.238ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.616    -0.563    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[8]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y31          FDRE (Prop_fdre_C_Q)         0.164    -0.399 r  m_dac/ACCUMULATOR_reg[8]/Q
+                         net (fo=3, routed)           0.149    -0.249    m_dac/ACCUMULATOR_reg_n_0_[8]
+    SLICE_X0Y31          LUT3 (Prop_lut3_I1_O)        0.045    -0.204 r  m_dac/ACCUMULATOR0_carry__0_i_5/O
+                         net (fo=1, routed)           0.000    -0.204    m_dac/ACCUMULATOR0_carry__0_i_5_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_S[3]_O[3])
+                                                      0.064    -0.140 r  m_dac/ACCUMULATOR0_carry__0/O[3]
+                         net (fo=1, routed)           0.000    -0.140    m_dac/ACCUMULATOR0_carry__0_n_4
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[8]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.884    -0.801    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[8]/C
+                         clock pessimism              0.238    -0.563    
+    SLICE_X0Y31          FDRE (Hold_fdre_C_D)         0.134    -0.429    m_dac/ACCUMULATOR_reg[8]
+  -------------------------------------------------------------------
+                         required time                          0.429    
+                         arrival time                          -0.140    
+  -------------------------------------------------------------------
+                         slack                                  0.288    
+
+Slack (MET) :             0.288ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[4]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[4]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.422ns  (logic 0.273ns (64.655%)  route 0.149ns (35.345%))
+  Logic Levels:           2  (CARRY4=1 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.802ns
+    Source Clock Delay      (SCD):    -0.564ns
+    Clock Pessimism Removal (CPR):    -0.238ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.615    -0.564    m_dac/CLK
+    SLICE_X0Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[4]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y30          FDRE (Prop_fdre_C_Q)         0.164    -0.400 r  m_dac/ACCUMULATOR_reg[4]/Q
+                         net (fo=3, routed)           0.149    -0.250    m_dac/ACCUMULATOR_reg_n_0_[4]
+    SLICE_X0Y30          LUT3 (Prop_lut3_I1_O)        0.045    -0.205 r  m_dac/ACCUMULATOR0_carry_i_5/O
+                         net (fo=1, routed)           0.000    -0.205    m_dac/ACCUMULATOR0_carry_i_5_n_0
+    SLICE_X0Y30          CARRY4 (Prop_carry4_S[3]_O[3])
+                                                      0.064    -0.141 r  m_dac/ACCUMULATOR0_carry/O[3]
+                         net (fo=1, routed)           0.000    -0.141    m_dac/ACCUMULATOR0_carry_n_4
+    SLICE_X0Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[4]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.883    -0.802    m_dac/CLK
+    SLICE_X0Y30          FDRE                                         r  m_dac/ACCUMULATOR_reg[4]/C
+                         clock pessimism              0.238    -0.564    
+    SLICE_X0Y30          FDRE (Hold_fdre_C_D)         0.134    -0.430    m_dac/ACCUMULATOR_reg[4]
+  -------------------------------------------------------------------
+                         required time                          0.430    
+                         arrival time                          -0.141    
+  -------------------------------------------------------------------
+                         slack                                  0.288    
+
+Slack (MET) :             0.288ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[12]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[12]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.422ns  (logic 0.273ns (64.655%)  route 0.149ns (35.345%))
+  Logic Levels:           2  (CARRY4=1 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.800ns
+    Source Clock Delay      (SCD):    -0.562ns
+    Clock Pessimism Removal (CPR):    -0.238ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.617    -0.562    m_dac/CLK
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[12]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y32          FDRE (Prop_fdre_C_Q)         0.164    -0.398 r  m_dac/ACCUMULATOR_reg[12]/Q
+                         net (fo=3, routed)           0.149    -0.248    m_dac/ACCUMULATOR_reg_n_0_[12]
+    SLICE_X0Y32          LUT3 (Prop_lut3_I1_O)        0.045    -0.203 r  m_dac/ACCUMULATOR0_carry__1_i_5/O
+                         net (fo=1, routed)           0.000    -0.203    m_dac/ACCUMULATOR0_carry__1_i_5_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_S[3]_O[3])
+                                                      0.064    -0.139 r  m_dac/ACCUMULATOR0_carry__1/O[3]
+                         net (fo=1, routed)           0.000    -0.139    m_dac/ACCUMULATOR0_carry__1_n_4
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[12]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.885    -0.800    m_dac/CLK
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[12]/C
+                         clock pessimism              0.238    -0.562    
+    SLICE_X0Y32          FDRE (Hold_fdre_C_D)         0.134    -0.428    m_dac/ACCUMULATOR_reg[12]
+  -------------------------------------------------------------------
+                         required time                          0.428    
+                         arrival time                          -0.139    
+  -------------------------------------------------------------------
+                         slack                                  0.288    
+
+Slack (MET) :             0.315ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[5]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[6]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.449ns  (logic 0.275ns (61.219%)  route 0.174ns (38.781%))
+  Logic Levels:           2  (CARRY4=1 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.801ns
+    Source Clock Delay      (SCD):    -0.563ns
+    Clock Pessimism Removal (CPR):    -0.238ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.616    -0.563    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[5]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y31          FDRE (Prop_fdre_C_Q)         0.164    -0.399 r  m_dac/ACCUMULATOR_reg[5]/Q
+                         net (fo=3, routed)           0.174    -0.224    m_dac/ACCUMULATOR_reg_n_0_[5]
+    SLICE_X0Y31          LUT3 (Prop_lut3_I0_O)        0.045    -0.179 r  m_dac/ACCUMULATOR0_carry__0_i_7/O
+                         net (fo=1, routed)           0.000    -0.179    m_dac/ACCUMULATOR0_carry__0_i_7_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_S[1]_O[1])
+                                                      0.066    -0.113 r  m_dac/ACCUMULATOR0_carry__0/O[1]
+                         net (fo=1, routed)           0.000    -0.113    m_dac/ACCUMULATOR0_carry__0_n_6
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[6]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.884    -0.801    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[6]/C
+                         clock pessimism              0.238    -0.563    
+    SLICE_X0Y31          FDRE (Hold_fdre_C_D)         0.134    -0.429    m_dac/ACCUMULATOR_reg[6]
+  -------------------------------------------------------------------
+                         required time                          0.429    
+                         arrival time                          -0.113    
+  -------------------------------------------------------------------
+                         slack                                  0.315    
+
+Slack (MET) :             0.315ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[13]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[14]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.449ns  (logic 0.275ns (61.219%)  route 0.174ns (38.781%))
+  Logic Levels:           2  (CARRY4=1 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.799ns
+    Source Clock Delay      (SCD):    -0.561ns
+    Clock Pessimism Removal (CPR):    -0.238ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.618    -0.561    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[13]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.164    -0.397 r  m_dac/ACCUMULATOR_reg[13]/Q
+                         net (fo=3, routed)           0.174    -0.222    m_dac/ACCUMULATOR_reg_n_0_[13]
+    SLICE_X0Y33          LUT3 (Prop_lut3_I0_O)        0.045    -0.177 r  m_dac/ACCUMULATOR0_carry__2_i_4/O
+                         net (fo=1, routed)           0.000    -0.177    m_dac/ACCUMULATOR0_carry__2_i_4_n_0
+    SLICE_X0Y33          CARRY4 (Prop_carry4_S[1]_O[1])
+                                                      0.066    -0.111 r  m_dac/ACCUMULATOR0_carry__2/O[1]
+                         net (fo=1, routed)           0.000    -0.111    m_dac/ACCUMULATOR0_carry__2_n_6
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[14]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.886    -0.799    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[14]/C
+                         clock pessimism              0.238    -0.561    
+    SLICE_X0Y33          FDRE (Hold_fdre_C_D)         0.134    -0.427    m_dac/ACCUMULATOR_reg[14]
+  -------------------------------------------------------------------
+                         required time                          0.427    
+                         arrival time                          -0.111    
+  -------------------------------------------------------------------
+                         slack                                  0.315    
+
+Slack (MET) :             0.315ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[9]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[10]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.449ns  (logic 0.275ns (61.219%)  route 0.174ns (38.781%))
+  Logic Levels:           2  (CARRY4=1 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.800ns
+    Source Clock Delay      (SCD):    -0.562ns
+    Clock Pessimism Removal (CPR):    -0.238ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.617    -0.562    m_dac/CLK
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[9]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y32          FDRE (Prop_fdre_C_Q)         0.164    -0.398 r  m_dac/ACCUMULATOR_reg[9]/Q
+                         net (fo=3, routed)           0.174    -0.223    m_dac/ACCUMULATOR_reg_n_0_[9]
+    SLICE_X0Y32          LUT3 (Prop_lut3_I0_O)        0.045    -0.178 r  m_dac/ACCUMULATOR0_carry__1_i_7/O
+                         net (fo=1, routed)           0.000    -0.178    m_dac/ACCUMULATOR0_carry__1_i_7_n_0
+    SLICE_X0Y32          CARRY4 (Prop_carry4_S[1]_O[1])
+                                                      0.066    -0.112 r  m_dac/ACCUMULATOR0_carry__1/O[1]
+                         net (fo=1, routed)           0.000    -0.112    m_dac/ACCUMULATOR0_carry__1_n_6
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[10]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.885    -0.800    m_dac/CLK
+    SLICE_X0Y32          FDRE                                         r  m_dac/ACCUMULATOR_reg[10]/C
+                         clock pessimism              0.238    -0.562    
+    SLICE_X0Y32          FDRE (Hold_fdre_C_D)         0.134    -0.428    m_dac/ACCUMULATOR_reg[10]
+  -------------------------------------------------------------------
+                         required time                          0.428    
+                         arrival time                          -0.112    
+  -------------------------------------------------------------------
+                         slack                                  0.315    
+
+Slack (MET) :             0.319ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[5]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[5]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.453ns  (logic 0.279ns (61.561%)  route 0.174ns (38.439%))
+  Logic Levels:           2  (CARRY4=1 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.801ns
+    Source Clock Delay      (SCD):    -0.563ns
+    Clock Pessimism Removal (CPR):    -0.238ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.616    -0.563    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[5]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y31          FDRE (Prop_fdre_C_Q)         0.164    -0.399 r  m_dac/ACCUMULATOR_reg[5]/Q
+                         net (fo=3, routed)           0.174    -0.224    m_dac/ACCUMULATOR_reg_n_0_[5]
+    SLICE_X0Y31          LUT3 (Prop_lut3_I1_O)        0.045    -0.179 r  m_dac/ACCUMULATOR0_carry__0_i_8/O
+                         net (fo=1, routed)           0.000    -0.179    m_dac/ACCUMULATOR0_carry__0_i_8_n_0
+    SLICE_X0Y31          CARRY4 (Prop_carry4_S[0]_O[0])
+                                                      0.070    -0.109 r  m_dac/ACCUMULATOR0_carry__0/O[0]
+                         net (fo=1, routed)           0.000    -0.109    m_dac/ACCUMULATOR0_carry__0_n_7
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[5]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.884    -0.801    m_dac/CLK
+    SLICE_X0Y31          FDRE                                         r  m_dac/ACCUMULATOR_reg[5]/C
+                         clock pessimism              0.238    -0.563    
+    SLICE_X0Y31          FDRE (Hold_fdre_C_D)         0.134    -0.429    m_dac/ACCUMULATOR_reg[5]
+  -------------------------------------------------------------------
+                         required time                          0.429    
+                         arrival time                          -0.109    
+  -------------------------------------------------------------------
+                         slack                                  0.319    
+
+Slack (MET) :             0.319ns  (arrival time - required time)
+  Source:                 m_dac/ACCUMULATOR_reg[13]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Destination:            m_dac/ACCUMULATOR_reg[13]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_clk_wiz_0  {rise@0.000ns fall@5.086ns period=10.172ns})
+  Path Group:             clk_out1_clk_wiz_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_out1_clk_wiz_0 rise@0.000ns - clk_out1_clk_wiz_0 rise@0.000ns)
+  Data Path Delay:        0.453ns  (logic 0.279ns (61.561%)  route 0.174ns (38.439%))
+  Logic Levels:           2  (CARRY4=1 LUT3=1)
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    -0.799ns
+    Source Clock Delay      (SCD):    -0.561ns
+    Clock Pessimism Removal (CPR):    -0.238ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.258     0.258 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.440     0.698    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -2.421    -1.722 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.518    -1.204    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026    -1.178 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.618    -0.561    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[13]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X0Y33          FDRE (Prop_fdre_C_Q)         0.164    -0.397 r  m_dac/ACCUMULATOR_reg[13]/Q
+                         net (fo=3, routed)           0.174    -0.222    m_dac/ACCUMULATOR_reg_n_0_[13]
+    SLICE_X0Y33          LUT3 (Prop_lut3_I1_O)        0.045    -0.177 r  m_dac/ACCUMULATOR0_carry__2_i_5/O
+                         net (fo=1, routed)           0.000    -0.177    m_dac/ACCUMULATOR0_carry__2_i_5_n_0
+    SLICE_X0Y33          CARRY4 (Prop_carry4_S[0]_O[0])
+                                                      0.070    -0.107 r  m_dac/ACCUMULATOR0_carry__2/O[0]
+                         net (fo=1, routed)           0.000    -0.107    m_dac/ACCUMULATOR0_carry__2_n_7
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_clk_wiz_0 rise edge)
+                                                      0.000     0.000 r  
+    Y9                                                0.000     0.000 r  gclk (IN)
+                         net (fo=0)                   0.000     0.000    clk_gen/inst/clk_in1
+    Y9                   IBUF (Prop_ibuf_I_O)         0.446     0.446 r  clk_gen/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           0.480     0.926    clk_gen/inst/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.204    -2.278 r  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.564    -1.714    clk_gen/inst/clk_out1_clk_wiz_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029    -1.685 r  clk_gen/inst/clkout1_buf/O
+                         net (fo=16, routed)          0.886    -0.799    m_dac/CLK
+    SLICE_X0Y33          FDRE                                         r  m_dac/ACCUMULATOR_reg[13]/C
+                         clock pessimism              0.238    -0.561    
+    SLICE_X0Y33          FDRE (Hold_fdre_C_D)         0.134    -0.427    m_dac/ACCUMULATOR_reg[13]
+  -------------------------------------------------------------------
+                         required time                          0.427    
+                         arrival time                          -0.107    
+  -------------------------------------------------------------------
+                         slack                                  0.319    
+
+
+
+
+
+Pulse Width Checks
+--------------------------------------------------------------------------------------
+Clock Name:         clk_out1_clk_wiz_0
+Waveform(ns):       { 0.000 5.086 }
+Period(ns):         10.172
+Sources:            { clk_gen/inst/mmcm_adv_inst/CLKOUT0 }
+
+Check Type        Corner  Lib Pin             Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location         Pin
+Min Period        n/a     BUFG/I              n/a            2.155         10.172      8.017      BUFGCTRL_X0Y0    clk_gen/inst/clkout1_buf/I
+Min Period        n/a     MMCME2_ADV/CLKOUT0  n/a            1.249         10.172      8.923      MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+Min Period        n/a     FDRE/C              n/a            1.000         10.172      9.172      SLICE_X1Y30      m_dac/ACCUMULATOR_reg[0]/C
+Min Period        n/a     FDRE/C              n/a            1.000         10.172      9.172      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[10]/C
+Min Period        n/a     FDRE/C              n/a            1.000         10.172      9.172      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[11]/C
+Min Period        n/a     FDRE/C              n/a            1.000         10.172      9.172      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[12]/C
+Min Period        n/a     FDRE/C              n/a            1.000         10.172      9.172      SLICE_X0Y33      m_dac/ACCUMULATOR_reg[13]/C
+Min Period        n/a     FDRE/C              n/a            1.000         10.172      9.172      SLICE_X0Y33      m_dac/ACCUMULATOR_reg[14]/C
+Min Period        n/a     FDRE/C              n/a            1.000         10.172      9.172      SLICE_X0Y33      m_dac/ACCUMULATOR_reg[15]/C
+Min Period        n/a     FDRE/C              n/a            1.000         10.172      9.172      SLICE_X1Y30      m_dac/ACCUMULATOR_reg[1]/C
+Max Period        n/a     MMCME2_ADV/CLKOUT0  n/a            213.360       10.172      203.188    MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKOUT0
+Low Pulse Width   Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[10]/C
+Low Pulse Width   Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[11]/C
+Low Pulse Width   Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[12]/C
+Low Pulse Width   Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[9]/C
+Low Pulse Width   Fast    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X1Y30      m_dac/ACCUMULATOR_reg[0]/C
+Low Pulse Width   Fast    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[10]/C
+Low Pulse Width   Fast    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[11]/C
+Low Pulse Width   Fast    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[12]/C
+Low Pulse Width   Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y33      m_dac/ACCUMULATOR_reg[13]/C
+Low Pulse Width   Fast    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y33      m_dac/ACCUMULATOR_reg[13]/C
+High Pulse Width  Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X1Y30      m_dac/ACCUMULATOR_reg[0]/C
+High Pulse Width  Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X1Y30      m_dac/ACCUMULATOR_reg[1]/C
+High Pulse Width  Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y30      m_dac/ACCUMULATOR_reg[2]/C
+High Pulse Width  Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y30      m_dac/ACCUMULATOR_reg[3]/C
+High Pulse Width  Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y30      m_dac/ACCUMULATOR_reg[4]/C
+High Pulse Width  Fast    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X1Y30      m_dac/ACCUMULATOR_reg[0]/C
+High Pulse Width  Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[10]/C
+High Pulse Width  Fast    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[10]/C
+High Pulse Width  Slow    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[11]/C
+High Pulse Width  Fast    FDRE/C              n/a            0.500         5.086       4.586      SLICE_X0Y32      m_dac/ACCUMULATOR_reg[11]/C
+
+
+
+---------------------------------------------------------------------------------------------------
+From Clock:  clkfbout_clk_wiz_0
+  To Clock:  clkfbout_clk_wiz_0
+
+Setup :           NA  Failing Endpoints,  Worst Slack           NA  ,  Total Violation           NA
+Hold  :           NA  Failing Endpoints,  Worst Slack           NA  ,  Total Violation           NA
+PW    :            0  Failing Endpoints,  Worst Slack        7.845ns,  Total Violation        0.000ns
+---------------------------------------------------------------------------------------------------
+
+
+Pulse Width Checks
+--------------------------------------------------------------------------------------
+Clock Name:         clkfbout_clk_wiz_0
+Waveform(ns):       { 0.000 5.000 }
+Period(ns):         10.000
+Sources:            { clk_gen/inst/mmcm_adv_inst/CLKFBOUT }
+
+Check Type  Corner  Lib Pin              Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location         Pin
+Min Period  n/a     BUFG/I               n/a            2.155         10.000      7.845      BUFGCTRL_X0Y1    clk_gen/inst/clkf_buf/I
+Min Period  n/a     MMCME2_ADV/CLKFBOUT  n/a            1.249         10.000      8.751      MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKFBOUT
+Min Period  n/a     MMCME2_ADV/CLKFBIN   n/a            1.249         10.000      8.751      MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKFBIN
+Max Period  n/a     MMCME2_ADV/CLKFBIN   n/a            100.000       10.000      90.000     MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKFBIN
+Max Period  n/a     MMCME2_ADV/CLKFBOUT  n/a            213.360       10.000      203.360    MMCME2_ADV_X0Y0  clk_gen/inst/mmcm_adv_inst/CLKFBOUT
+
 
 

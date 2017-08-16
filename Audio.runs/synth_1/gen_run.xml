@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7z020clg484-1" LaunchTime="1502880602">
-  <File Type="RDS-PROPCONSTRS" Name="dacMixTest_drc_synth.rpt"/>
-  <File Type="PA-TCL" Name="dacMixTest.tcl"/>
-  <File Type="RDS-RDS" Name="dacMixTest.vds"/>
-  <File Type="RDS-UTIL" Name="dacMixTest_utilization_synth.rpt"/>
-  <File Type="RDS-UTIL-PB" Name="dacMixTest_utilization_synth.pb"/>
-  <File Type="RDS-DCP" Name="dacMixTest.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="dacMixTest_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="dacMixTest_timing_summary_synth.pb"/>
+<GenRun Id="synth_1" LaunchPart="xc7z020clg484-1" LaunchTime="1502888812">
+  <File Type="RDS-PROPCONSTRS" Name="TOP_drc_synth.rpt"/>
+  <File Type="PA-TCL" Name="TOP.tcl"/>
+  <File Type="RDS-RDS" Name="TOP.vds"/>
+  <File Type="RDS-UTIL" Name="TOP_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="TOP_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="TOP.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="TOP_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="TOP_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/typedefs.vhd">
@@ -28,13 +28,19 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/sinerom.vhd">
+    <File Path="$PSRCDIR/sources_1/new/waveformGen.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/Mixer.vhd">
+    <File Path="$PSRCDIR/sources_1/new/uart.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/midi_parser.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -46,47 +52,45 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/Filter.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/Mixer.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/new/DAC.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/dacMixTest.vhd">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/waveformGen.vhd">
-      <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/Filter.vhd">
-      <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
     <File Path="$PSRCDIR/sources_1/new/TOP.vhd">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/uart.vhd">
+    <File Path="$PSRCDIR/sources_1/new/sinerom.vhd">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/midi_parser.vhd">
+    <File Path="$PSRCDIR/sources_1/new/dacMixTest.vhd">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/Envelope.vhd">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -95,7 +99,7 @@
     </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
-      <Option Name="TopModule" Val="dacMixTest"/>
+      <Option Name="TopModule" Val="TOP"/>
     </Config>
   </FileSet>
   <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">

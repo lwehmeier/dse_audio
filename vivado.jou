@@ -2,229 +2,33 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:23 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Wed Aug 16 10:07:10 2017
-# Process ID: 4544
+# Start of session at: Wed Aug 16 14:50:16 2017
+# Process ID: 14616
 # Current directory: D:/audio2
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent15492 D:\audio2\Audio.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent8516 D:\audio2\Audio.xpr
 # Log file: D:/audio2/vivado.log
 # Journal file: D:/audio2\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project D:/audio2/Audio.xpr
-launch_simulation
-source DAC_Test.tcl
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-run 50 ns
-close_sim
-set_property SOURCE_SET sources_1 [get_filesets sim_1]
-close [ open D:/audio2/Audio.srcs/sim_1/new/uart_rx_test.vhd w ]
-add_files -fileset sim_1 D:/audio2/Audio.srcs/sim_1/new/uart_rx_test.vhd
-launch_simulation
-source DAC_Test.tcl
-run 50 ms
-close_sim
 # Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
 set_property source_mgmt_mode None [current_project]
-set_property top uart_test [get_filesets sim_1]
-set_property top_lib xil_defaultlib [get_filesets sim_1]
+set_property top TOP [current_fileset]
 # Re-enabling previously disabled source management mode.
 set_property source_mgmt_mode All [current_project]
-launch_simulation
-source uart_test.tcl
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-relaunch_sim
-relaunch_sim
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-run 100 us
-relaunch_sim
-run 1 ms
-relaunch_sim
-run 1 ms
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-close_sim
-launch_simulation
-launch_simulation
-launch_simulation
-launch_simulation
-source uart_test.tcl
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-add_wave {{/uart_test/uut/DELAY_DONE}} 
-add_wave {{/uart_test/uut/DATA}} 
-add_wave {{/uart_test/uut/RX_STATE}} 
-relaunch_sim
-run 105 us
-add_wave {{/uart_test/uut/DELAY_COUNTER}} 
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 ms
-relaunch_sim
-run 105 ms
-relaunch_sim
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-close_sim
-launch_simulation
-source uart_test.tcl
-close_sim
-reset_run clk_wiz_0_synth_1
 reset_run synth_1
 launch_runs synth_1 -jobs 4
 wait_on_run synth_1
-close [ open D:/audio2/Audio.srcs/sources_1/new/midi_parser.vhd w ]
-add_files D:/audio2/Audio.srcs/sources_1/new/midi_parser.vhd
-set_property SOURCE_SET sources_1 [get_filesets sim_1]
-close [ open D:/audio2/Audio.srcs/sim_1/new/uart_midi_test.vhd w ]
-add_files -fileset sim_1 D:/audio2/Audio.srcs/sim_1/new/uart_midi_test.vhd
-# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
-set_property source_mgmt_mode None [current_project]
-set_property top uart_midi_test [get_filesets sim_1]
-set_property top_lib xil_defaultlib [get_filesets sim_1]
-# Re-enabling previously disabled source management mode.
-set_property source_mgmt_mode All [current_project]
-launch_simulation
-launch_simulation
-launch_simulation
-launch_simulation
-source uart_midi_test.tcl
-run 105 us
-run 105 us
-run 105 us
-run 105 us
-run 1 ms
-run 1 ms
-run 1 ms
-close_sim
-launch_simulation
-source uart_midi_test.tcl
-run 1 ms
-run 1 ms
-run 1 ms
-run 1 ms
-add_wave {{/uart_midi_test/uut/noteOff}} 
-add_wave {{/uart_midi_test/uut/rxData}} 
-relaunch_sim
-run 1 ms
-run 1 ms
-run 1 ms
-run 1 ms
-relaunch_sim
-run 1 ms
-run 1 ms
-relaunch_sim
-run 1 ms
-run 1 ms
-run 1 ms
-run 1 ms
-run 1 ms
-relaunch_sim
-run 5 ms
-relaunch_sim
-run 5 ms
-relaunch_sim
-run 5 ms
-relaunch_sim
-run 6 ms
-relaunch_sim
-run 6 ms
-relaunch_sim
-run 6 ms
-relaunch_sim
-run 6 ms
-relaunch_sim
-run 6 ms
-relaunch_sim
-run 6 ms
-run 6 ms
-relaunch_sim
-run 6 ms
-run 6 ms
-save_wave_config {D:/audio2/uart_midi_test_behav.wcfg}
-add_files -fileset sim_1 -norecurse D:/audio2/uart_midi_test_behav.wcfg
-set_property xsim.view D:/audio2/uart_midi_test_behav.wcfg [get_filesets sim_1]
-close_sim
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+reset_run impl_1
+launch_runs impl_1 -jobs 4
+wait_on_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
 reset_run synth_1
 launch_runs synth_1 -jobs 4
 wait_on_run synth_1
@@ -232,3 +36,16 @@ launch_runs impl_1 -jobs 4
 wait_on_run impl_1
 launch_runs impl_1 -to_step write_bitstream -jobs 4
 wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/TOP.bit} [lindex [get_hw_devices xc7z020_1] 0]
+current_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROGRAM.FILE {D:/audio2/Audio.runs/impl_1/TOP.bit} [lindex [get_hw_devices xc7z020_1] 0]
+program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]

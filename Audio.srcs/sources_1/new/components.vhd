@@ -44,8 +44,8 @@ end component;
 component midi_parser is
     Port ( rxData : in STD_LOGIC_VECTOR (7 downto 0);
            newData : in STD_LOGIC;
-           note : out STD_LOGIC_VECTOR (7 downto 0);
-           volume : out STD_LOGIC_VECTOR (7 downto 0);
+           note : out note_vector_t;
+           volume : out volume_vector_t;
            clk : in STD_LOGIC);  
 end component;
 component DAC is

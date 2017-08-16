@@ -1,8 +1,8 @@
 Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2016.4 (win64) Build 1756540 Mon Jan 23 19:11:23 MST 2017
-| Date         : Tue Aug 15 10:10:51 2017
-| Host         : HTI16 running 64-bit major release  (build 9200)
+| Date         : Wed Aug 16 15:07:48 2017
+| Host         : HTI14 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file TOP_control_sets_placed.rpt
 | Design       : TOP
 | Device       : xc7z020
@@ -22,7 +22,7 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Number of unique control sets                            |     0 |
+| Number of unique control sets                            |     1 |
 | Unused register locations in slices containing registers |     0 |
 +----------------------------------------------------------+-------+
 
@@ -33,7 +33,7 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               0 |            0 |
+| No           | No                    | No                     |              16 |            5 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |               0 |            0 |
 | Yes          | No                    | No                     |               0 |            0 |
@@ -45,13 +45,17 @@ Table of Contents
 3. Detailed Control Set Information
 -----------------------------------
 
-+--------------+---------------+------------------+------------------+----------------+
-| Clock Signal | Enable Signal | Set/Reset Signal | Slice Load Count | Bel Load Count |
-+--------------+---------------+------------------+------------------+----------------+
++------------------------+---------------+------------------+------------------+----------------+
+|      Clock Signal      | Enable Signal | Set/Reset Signal | Slice Load Count | Bel Load Count |
++------------------------+---------------+------------------+------------------+----------------+
+|  clk_gen/inst/clk_out1 |               |                  |                5 |             16 |
++------------------------+---------------+------------------+------------------+----------------+
 
 
 +--------+-----------------------+
 | Fanout | Number of ControlSets |
++--------+-----------------------+
+| 16+    |                     1 |
 +--------+-----------------------+
 
 

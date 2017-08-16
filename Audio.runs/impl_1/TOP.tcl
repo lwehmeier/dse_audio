@@ -53,21 +53,21 @@ set rc [catch {
   set_property board_part em.avnet.com:zed:part0:1.3 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
-  set_property webtalk.parent_dir D:/audio/Audio/Audio.cache/wt [current_project]
-  set_property parent.project_path D:/audio/Audio/Audio.xpr [current_project]
-  set_property ip_output_repo D:/audio/Audio/Audio.cache/ip [current_project]
+  set_property webtalk.parent_dir D:/audio2/Audio.cache/wt [current_project]
+  set_property parent.project_path D:/audio2/Audio.xpr [current_project]
+  set_property ip_output_repo D:/audio2/Audio.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES XPM_CDC [current_project]
-  add_files -quiet D:/audio/Audio/Audio.runs/synth_1/TOP.dcp
-  add_files -quiet d:/audio/Audio/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp
-  set_property netlist_only true [get_files d:/audio/Audio/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp]
-  read_xdc -mode out_of_context -ref clk_wiz_0 -cells inst d:/audio/Audio/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc
-  set_property processing_order EARLY [get_files d:/audio/Audio/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc]
-  read_xdc -prop_thru_buffers -ref clk_wiz_0 -cells inst d:/audio/Audio/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc
-  set_property processing_order EARLY [get_files d:/audio/Audio/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc]
-  read_xdc -ref clk_wiz_0 -cells inst d:/audio/Audio/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc
-  set_property processing_order EARLY [get_files d:/audio/Audio/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]
-  read_xdc D:/audio/Audio/Audio.srcs/constrs_1/imports/Downloads/zedboard_master_XDC_RevC_D_v3.xdc
+  add_files -quiet D:/audio2/Audio.runs/synth_1/TOP.dcp
+  add_files -quiet d:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp
+  set_property netlist_only true [get_files d:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp]
+  read_xdc -mode out_of_context -ref clk_wiz_0 -cells inst d:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc
+  set_property processing_order EARLY [get_files d:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc]
+  read_xdc -prop_thru_buffers -ref clk_wiz_0 -cells inst d:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc
+  set_property processing_order EARLY [get_files d:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc]
+  read_xdc -ref clk_wiz_0 -cells inst d:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc
+  set_property processing_order EARLY [get_files d:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]
+  read_xdc D:/audio2/Audio.srcs/constrs_1/imports/Downloads/zedboard_master_XDC_RevC_D_v3.xdc
   link_design -top TOP -part xc7z020clg484-1
   write_hwdef -file TOP.hwdef
   close_msg_db -file init_design.pb
@@ -137,6 +137,25 @@ if {$rc} {
   return -code error $RESULT
 } else {
   end_step route_design
+  unset ACTIVE_STEP 
+}
+
+start_step write_bitstream
+set ACTIVE_STEP write_bitstream
+set rc [catch {
+  create_msg_db write_bitstream.pb
+  set_property XPM_LIBRARIES XPM_CDC [current_project]
+  catch { write_mem_info -force TOP.mmi }
+  write_bitstream -force -no_partial_bitfile TOP.bit 
+  catch { write_sysdef -hwdef TOP.hwdef -bitfile TOP.bit -meminfo TOP.mmi -file TOP.sysdef }
+  catch {write_debug_probes -quiet -force debug_nets}
+  close_msg_db -file write_bitstream.pb
+} RESULT]
+if {$rc} {
+  step_failed write_bitstream
+  return -code error $RESULT
+} else {
+  end_step write_bitstream
   unset ACTIVE_STEP 
 }
 
