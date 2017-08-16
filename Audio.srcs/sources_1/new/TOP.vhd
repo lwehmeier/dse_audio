@@ -32,12 +32,19 @@ signal CLK : std_logic;
 signal ce48k : std_logic;
 signal uartDR : std_logic;
 signal uartData : std_logic_vector(7 downto 0);
+signal note : std_logic_vector(7 downto 0);
+signal volume : std_logic_vector(7 downto 0);
 
 begin
 clk_gen: clk_wiz_0 port map(clk_out1 => CLK, reset => reset, clk_in1 => gclk);
-rxUart: UART_RX_CTRL port map (CLK     => CLK, UART_RX => midi_rx, DATA => uartData, READ_DATA => uartDR);
+rxUart: UART_RX_CTRL port map (CLK     => CLK, UART_RX => midi_rx, DATA => uartData, READ_DATA => uartDR); --might need to fix baudrate and start bit?
+midi: midi_parser port map (CLK     => CLK, rxData => uartData,  newData => uartDR,volume => volume, note => note);
 ce_gen: CEGEN48k generic map(BIT_WIDTH => 16) port map(GCLK => CLK, OUTPUT => ce48k, ENABLE => '1', RESET => reset, TOP_VAL => std_logic_vector(to_unsigned(2047,16)));
-wg_gen_loop : for i in 0 to mix_channel_count-1 generate
+
+--removed gen0 from loop, connect to midi ch 0 for testing
+wg0: waveformGen generic map (wg_type => wg_types_vect(0))Port map (CLK => CLK, CE => ce48k, PCM_OUT => wg2filter(0), NOTE => note, VOLUME =>volume, RESET => reset);
+    
+wg_gen_loop : for i in 1 to mix_channel_count-1 generate
     m_wg_x: waveformGen generic map (
         wg_type => wg_types_vect(i)
     )

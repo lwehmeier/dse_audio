@@ -32,7 +32,8 @@ entity UART_RX_CTRL is
     Port ( UART_RX : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
            DATA : out  STD_LOGIC_VECTOR (7 downto 0);
-           READ_DATA : out  STD_LOGIC := '0'
+                      READ_DATA : out  STD_LOGIC := '0';
+                      READ_DATA_PULSE : out  STD_LOGIC := '0'
 			  );
 end UART_RX_CTRL;
 
@@ -58,8 +59,25 @@ signal BIT_INDEX : natural := 0;
 
 signal RX_DATA : std_logic_vector(7 downto 0) := (others => '0');
 signal RX_BIT : std_logic := '0';
+signal drLastState : std_logic := '0';
+signal drSig : std_logic := '0';
 
 begin
+
+readPulseProcess : process (CLK)
+begin
+    if rising_edge(clk) then
+        if drLastState=drSig then
+            READ_DATA_PULSE<='0';
+        elsif drSig='1' then
+            drLastState<='1';
+            READ_DATA_PULSE<='1';
+        else --drSig changed to 0
+            drLastState<='0';
+            READ_DATA_PULSE<='0';
+        end if;
+    end if;
+end process;
 --receiving state machine
 rx_state_process : process (CLK)
 begin
@@ -84,11 +102,13 @@ begin
 				else
 					RX_STATE <= GET_BIT;
 					READ_DATA <= '0'; --data is not valid anymore
+					drSig <= '0';
 				end if;
 
 			when READ_BIT =>	--read bit
 				if(BIT_INDEX = BIT_INDEX_MAX) then
 					RX_STATE <= READY;
+					drSig <= '1';
 					READ_DATA <= '1';	--data is valid so read!
 				else
 					BIT_INDEX <= BIT_INDEX +1;

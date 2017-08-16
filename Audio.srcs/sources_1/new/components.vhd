@@ -37,10 +37,17 @@ component UART_RX_CTRL is
     Port ( UART_RX : in  STD_LOGIC;
            CLK : in  STD_LOGIC;
            DATA : out  STD_LOGIC_VECTOR (7 downto 0);
+           READ_DATA_PULSE : out  STD_LOGIC := '0';
            READ_DATA : out  STD_LOGIC := '0'
 			  );
 end component;
-
+component midi_parser is
+    Port ( rxData : in STD_LOGIC_VECTOR (7 downto 0);
+           newData : in STD_LOGIC;
+           note : out STD_LOGIC_VECTOR (7 downto 0);
+           volume : out STD_LOGIC_VECTOR (7 downto 0);
+           clk : in STD_LOGIC);  
+end component;
 component DAC is
     Port ( CLK : in STD_LOGIC;
            CE : in STD_LOGIC;
