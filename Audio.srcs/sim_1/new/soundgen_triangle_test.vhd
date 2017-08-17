@@ -84,8 +84,8 @@ begin
         -- generate note A at period start
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(0, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(0, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -94,15 +94,15 @@ begin
         report "PCM@0/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(0, 16)
+        assert pcm = to_signed(-32768, 16)
             report "SoundGen Triangle: Wrong PCM at period start"
             severity failure;
         
         -- generate note A at 1/8
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(13, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(13, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -111,15 +111,15 @@ begin
         report "PCM@13/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(15776, 16)
+        assert pcm = to_signed(-17136, 16)
             report "SoundGen Triangle: Wrong PCM at 1/8 period"
             severity failure;
         
         -- generate A at 1/4 period
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(27, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(27, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -128,15 +128,15 @@ begin
         report "PCM@27/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(32767, 16)
+        assert pcm = to_signed(-302, 16)
             report "SoundGen Triangle: Wrong PCM at 1/4 period"
             severity failure;
         
         -- generate note A at 3/8
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(40, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(40, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -145,15 +145,15 @@ begin
         report "PCM@40/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(16991, 16)
+        assert pcm = to_signed(15331, 16)
             report "SoundGen Triangle: Wrong PCM at 3/8 period"
             severity failure;
         
         -- generate A at 2/4 period
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(54, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(54, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -162,15 +162,15 @@ begin
         report "PCM@54/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(0, 16)
+        assert pcm = to_signed(32767, 16)
             report "SoundGen Triangle: Wrong PCM at 2/4 period"
             severity failure;
 
         -- generate note A at 5/8
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(67, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(67, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -179,15 +179,15 @@ begin
         report "PCM@67/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(-15777, 16)
+        assert pcm = to_signed(17736, 16)
             report "SoundGen Triangle: Wrong PCM at 5/8 period"
             severity failure;
         
         -- generate A at 3/4 period
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(81, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(81, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -196,15 +196,15 @@ begin
         report "PCM@81/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(-32768, 16)
+        assert pcm = to_signed(901, 16)
             report "SoundGen Triangle: Wrong PCM at 3/4 period"
             severity failure;
 
         -- generate note A at 7/8
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(94, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(94, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -213,15 +213,15 @@ begin
         report "PCM@94/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(-16991, 16)
+        assert pcm = to_signed(-14731, 16)
             report "SoundGen Triangle: Wrong PCM at 7/8 period"
             severity failure;
         
         -- generate A at 4/4 period
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(108, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(108, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -230,7 +230,7 @@ begin
         report "PCM@108/109 vol=255: " & integer'image(to_integer(pcm))
             severity note;
         
-        assert pcm = to_signed(0, 16)
+        assert pcm = to_signed(-31566, 16)
             report "SoundGen Triangle: Wrong PCM at 4/4 period"
             severity failure;
 

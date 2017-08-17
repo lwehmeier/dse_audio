@@ -83,8 +83,8 @@ begin
         -- generate note A at full volume
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(0, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(0, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -100,8 +100,8 @@ begin
         -- generate A at half volume
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(128, 8));
-        counter <= to_unsigned(0, 16);
+        volume <= std_logic_vector(to_unsigned(128, volume_t'length));
+        counter <= to_unsigned(0, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -112,15 +112,15 @@ begin
         
         -- will only work for 16 bit PCM, to fix it use pcm_min / 255 * 128 (NO int division here!)
         --  -> as constant floating point operations are not supported you have to calculate it manually
-        assert pcm = to_signed(-16448, 16)
+        assert pcm = to_signed(-16384, 16)
             report "SoundGen Square: Wrong PCM at index 0 on volume 128"
             severity failure;
         
         -- generate A at silence
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(0, 8));
-        counter <= to_unsigned(0, 16);
+        volume <= std_logic_vector(to_unsigned(0, volume_t'length));
+        counter <= to_unsigned(0, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -136,8 +136,8 @@ begin
         -- generate A at full volume at half period
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(54, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(54, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -153,8 +153,8 @@ begin
         -- generate A at full volume at half period + 1
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(55, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(55, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
@@ -170,8 +170,8 @@ begin
         -- generate A at full volume at full period
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(109, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(109, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';

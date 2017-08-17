@@ -23,6 +23,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.typedefs.all;
 use work.soundgen.all;
+use work.soundgen_saw_lut;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -52,7 +53,7 @@ begin
     begin
         if rising_edge(clk) then
             if ce = '1' and period > 0 then
-                pcm := resize(pcm_min + (pcm_max - pcm_min) * signed('0' & counter) / signed('0' & period), pcm_data_t'length); 
+                pcm := soundgen_saw_lut.counter_over_period(counter, period); 
                 pcm_out <= apply_volume(pcm, volume);
             end if;
         end if;

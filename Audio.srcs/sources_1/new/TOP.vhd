@@ -47,7 +47,7 @@ entity TOP is
 end TOP;
 
 architecture Behavioral of TOP is
-constant wg_types_vect : wg_type_vector_t := (wg_SQUARE, wg_TRIANGLE, wg_SAW, wg_NOISE);--wg_SQUARE, wg_SAW, wg_TRIANGLE);
+constant wg_types_vect : wg_type_vector_t := (wg_SQUARE, wg_TRIANGLE, wg_SAW, wg_SINE);--wg_SQUARE, wg_SAW, wg_TRIANGLE);
 
 signal wg2filter : mix_pcm_vector_t;
 signal wgfilter2mix : mix_pcm_vector_t;

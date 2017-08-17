@@ -78,7 +78,7 @@ begin
 
                 when STATE_BYTE2 =>
                     cstate<=STATE_CMD;
-                    parsedVelocity<=volume_zero;
+                    parsedVelocity<=x"00";
                     if noteOff='0' then
                         if rxData(7) = '0' then
                             parsedVelocity(7 downto 1) <= rxData(6 downto 0);

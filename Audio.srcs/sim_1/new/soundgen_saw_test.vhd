@@ -83,14 +83,14 @@ begin
         -- generate A at period start
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(0, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(0, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
         wait until clk = '0';
         
-        report "PCM@0/109 vol=255: " & integer'image(to_integer(pcm))
+        report "PCM@0/109 vol=256: " & integer'image(to_integer(pcm))
             severity note;
         
         assert pcm = to_signed(pcm_min, 16)
@@ -100,14 +100,14 @@ begin
         -- generate A at half period
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(55, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(55, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
         wait until clk = '0';
         
-        report "PCM@55/109 vol=255: " & integer'image(to_integer(pcm))
+        report "PCM@55/109 vol=256: " & integer'image(to_integer(pcm))
             severity note;
         
         assert pcm = to_signed(300, 16)
@@ -117,14 +117,14 @@ begin
         -- generate A at full period
         wait until clk = '0';
         period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
-        volume <= std_logic_vector(to_unsigned(255, 8));
-        counter <= to_unsigned(109, 16);
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
+        counter <= to_unsigned(109, sample_rate'length);
         ce <= '1';
 
         wait until clk = '1';
         wait until clk = '0';
         
-        report "PCM@109/109 vol=255: " & integer'image(to_integer(pcm))
+        report "PCM@109/109 vol=256: " & integer'image(to_integer(pcm))
             severity note;
         
         assert pcm = to_signed(pcm_max, 16)

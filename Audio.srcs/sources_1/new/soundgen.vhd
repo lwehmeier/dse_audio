@@ -38,6 +38,7 @@ package soundgen is
 end package soundgen;
 
 package body soundgen is
+
     function period_from_note(note: note_t) return integer is
     begin
         case to_integer(unsigned(note)) is
@@ -84,6 +85,7 @@ package body soundgen is
     function apply_volume(pcm: pcm_data_t; volume: volume_t) return pcm_data_t is
     begin
         -- this is linear for now
-        return resize(pcm * signed('0' & volume) / to_signed(255, pcm_data_t'length + volume_t'length), 16);
+        --return resize(pcm * signed('0' & volume) / to_signed(256, pcm_data_t'length + volume_t'length), 16);
+        return resize(shift_right(shift_left(resize(pcm, pcm_data_t'length + 9), 8) * signed('0' & volume), 16), pcm_data_t'length);
     end apply_volume;
 end package body;

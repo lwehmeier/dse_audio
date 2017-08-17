@@ -73,14 +73,24 @@ begin
     end process;
     
     process
+    variable vol: integer := 256;
     begin
         wait for 200ns;
         
         wait until clk = '0';
         note_sig <= std_logic_vector(to_unsigned(69, 8));
-        volume <= std_logic_vector(to_unsigned(255, 8));
+        volume <= std_logic_vector(to_unsigned(vol, 9));
         
-        for i in 0 to period_from_note(note_sig) * 4 loop
+        for i in 0 to 1000 loop
+            vol := vol - 1;
+            if vol <= 0 then
+                vol := 256;
+            end if;
+            
+            report "vol: " & integer'image(vol)
+                severity note;
+            
+            volume <= std_logic_vector(to_unsigned(vol, 9));
             wait until clk = '1';
             wait until clk = '0';
         end loop;

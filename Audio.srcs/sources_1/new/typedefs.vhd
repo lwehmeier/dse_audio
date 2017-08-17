@@ -56,9 +56,9 @@ package typedefs is
     type note_vector_t is array(mix_channel_count-1 downto 0) of note_t;
     constant note_empty : note_t := x"00";
     
-    subtype volume_t is std_logic_vector(7 downto 0);
+    subtype volume_t is std_logic_vector(8 downto 0);
     type volume_vector_t is array(mix_channel_count-1 downto 0) of volume_t;
-    constant volume_zero : volume_t := x"00";
+    constant volume_zero : volume_t := "000000000";
     function to_volume_t(x: integer) return volume_t;
     
     subtype add_mask_t is std_logic_vector(mix_channel_count-1 downto 0);

@@ -75,7 +75,7 @@ begin
         
         -- generate noise
         wait until clk = '0';
-        volume <= std_logic_vector(to_unsigned(255, 8));
+        volume <= std_logic_vector(to_unsigned(256, volume_t'length));
         ce <= '1';
 
         wait until clk = '1';

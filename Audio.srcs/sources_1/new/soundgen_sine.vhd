@@ -24,6 +24,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use work.typedefs.all;
 use work.soundgen.all;
 use work.sine_package.all;
+use work.soundgen_sine_lut;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -53,7 +54,7 @@ begin
     begin
         if rising_edge(clk) then
             if ce = '1' and period > 0 then
-                pcm := sin(to_integer(counter * 511 / period));
+                pcm := sin(to_integer(soundgen_sine_lut.counter_over_period(counter, period)));
                 pcm_out <= apply_volume(pcm, volume);
             end if;
         end if;
