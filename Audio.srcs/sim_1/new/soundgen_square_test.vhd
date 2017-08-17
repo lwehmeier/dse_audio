@@ -23,6 +23,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.components.all;
 use work.typedefs.all;
+use work.soundgen.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -40,18 +41,18 @@ architecture behav of soundgen_square_test is
     signal clk: std_logic;
     signal ce: std_logic;
     signal pcm: pcm_data_t;
-    signal note_sig: note_t;
     signal volume: volume_t;
     signal counter: unsigned(sample_rate'length - 1 downto 0);
+    signal period: unsigned(sample_rate'length - 1 downto 0);
     
     component soundgen_square is
         port (
             clk: in std_logic;
             ce: in std_logic;
             pcm_out: out pcm_data_t;
-            note: in note_t;
             volume: in volume_t;
             counter: in unsigned(sample_rate'length - 1 downto 0);
+            period: in unsigned(sample_rate'length - 1 downto 0);
             reset: in std_logic
         );
     end component;
@@ -61,9 +62,9 @@ begin
         clk => clk,
         ce => ce,
         pcm_out => pcm,
-        note => note_sig,
         volume => volume,
         counter => counter,
+        period => period,
         reset => '0'
     );
     
@@ -81,7 +82,7 @@ begin
         
         -- generate note A at full volume
         wait until clk = '0';
-        note_sig <= std_logic_vector(to_unsigned(69, 8));
+        period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
         volume <= std_logic_vector(to_unsigned(255, 8));
         counter <= to_unsigned(0, 16);
         ce <= '1';
@@ -98,7 +99,7 @@ begin
         
         -- generate A at half volume
         wait until clk = '0';
-        note_sig <= std_logic_vector(to_unsigned(69, 8));
+        period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
         volume <= std_logic_vector(to_unsigned(128, 8));
         counter <= to_unsigned(0, 16);
         ce <= '1';
@@ -117,7 +118,7 @@ begin
         
         -- generate A at silence
         wait until clk = '0';
-        note_sig <= std_logic_vector(to_unsigned(69, 8));
+        period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
         volume <= std_logic_vector(to_unsigned(0, 8));
         counter <= to_unsigned(0, 16);
         ce <= '1';
@@ -134,7 +135,7 @@ begin
         
         -- generate A at full volume at half period
         wait until clk = '0';
-        note_sig <= std_logic_vector(to_unsigned(69, 8));
+        period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
         volume <= std_logic_vector(to_unsigned(255, 8));
         counter <= to_unsigned(54, 16);
         ce <= '1';
@@ -151,7 +152,7 @@ begin
         
         -- generate A at full volume at half period + 1
         wait until clk = '0';
-        note_sig <= std_logic_vector(to_unsigned(69, 8));
+        period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
         volume <= std_logic_vector(to_unsigned(255, 8));
         counter <= to_unsigned(55, 16);
         ce <= '1';
@@ -168,7 +169,7 @@ begin
 
         -- generate A at full volume at full period
         wait until clk = '0';
-        note_sig <= std_logic_vector(to_unsigned(69, 8));
+        period <= to_unsigned(period_from_note(std_logic_vector(to_unsigned(69, 8))), sample_rate'length);
         volume <= std_logic_vector(to_unsigned(255, 8));
         counter <= to_unsigned(109, 16);
         ce <= '1';

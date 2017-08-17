@@ -43,7 +43,11 @@ generic (
 end Filter;
 
 architecture Behavioral of Filter is
-
 begin
-    PCM_OUT <= PCM_IN;
+    process (CLK)
+    begin
+        if rising_edge(CLK) then
+            PCM_OUT <= PCM_IN;
+        end if;
+    end process;
 end Behavioral;

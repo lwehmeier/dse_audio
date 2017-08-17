@@ -38,9 +38,9 @@ entity soundgen_square is
         clk: in std_logic;
         ce: in std_logic;
         pcm_out: out pcm_data_t;
-        note: in note_t;
         volume: in volume_t;
         counter: in unsigned(sample_rate'length - 1 downto 0);
+        period: in unsigned(sample_rate'length - 1 downto 0);
         reset: in std_logic
     );
 end soundgen_square;
@@ -48,20 +48,13 @@ end soundgen_square;
 architecture behav of soundgen_square is
 begin
     process (clk)
-    variable p_counter: integer;
-    variable period: integer;
     begin
         if rising_edge(clk) then
-            if ce = '1' then
-                period := period_from_note(note);
-                
-                if period > 0 then
-                    p_counter := to_integer(counter) mod period; 
-                    if p_counter > period / 2 then
-                        pcm_out <= apply_volume(to_signed(pcm_max, pcm_data_t'length), volume);
-                    else
-                        pcm_out <= apply_volume(to_signed(pcm_min, pcm_data_t'length), volume);
-                    end if;
+            if ce = '1' and period > 0 then
+                if counter > period / 2 then
+                    pcm_out <= apply_volume(to_signed(pcm_max, pcm_data_t'length), volume);
+                else
+                    pcm_out <= apply_volume(to_signed(pcm_min, pcm_data_t'length), volume);
                 end if;
             end if;
         end if;

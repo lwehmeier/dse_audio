@@ -12,7 +12,6 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 package sine_package is
-
   constant max_table_value: integer := 32767;
   subtype table_value_type is integer range 0 to max_table_value;
 
@@ -22,13 +21,12 @@ package sine_package is
   subtype sine_vector_type is std_logic_vector( 15 downto 0 );
 
   function get_table_value (table_index: table_index_type) return table_value_type;
-  function sin(i: integer range 0 to 511) return pcm_data_t;
-
+  function sin(i: table_index_type) return pcm_data_t;
 end;
 
 package body sine_package is
 
-  function sin(i: integer range 0 to 511) return pcm_data_t is
+  function sin(i: table_index_type) return pcm_data_t is
     variable value: pcm_data_t;
   begin
     if i >= 0 and i < 128 then

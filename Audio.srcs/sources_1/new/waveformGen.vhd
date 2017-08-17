@@ -22,6 +22,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.typedefs.all;
+use work.soundgen.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -48,15 +49,16 @@ end waveformGen;
 
 architecture behav of waveformGen is
     signal counter: unsigned(sample_rate'length - 1 downto 0) := to_unsigned(0, sample_rate'length);
+    signal period: unsigned(sample_rate'length - 1 downto 0) := to_unsigned(0, sample_rate'length);
     
     component soundgen_square is
         port (
             clk: in std_logic;
             ce: in std_logic;
             pcm_out: out pcm_data_t;
-            note: in note_t;
             volume: in volume_t;
             counter: in unsigned(sample_rate'length - 1 downto 0);
+            period: in unsigned(sample_rate'length - 1 downto 0);
             reset: in std_logic
         );
     end component;
@@ -66,9 +68,9 @@ architecture behav of waveformGen is
             clk: in std_logic;
             ce: in std_logic;
             pcm_out: out pcm_data_t;
-            note: in note_t;
             volume: in volume_t;
             counter: in unsigned(sample_rate'length - 1 downto 0);
+            period: in unsigned(sample_rate'length - 1 downto 0);
             reset: in std_logic
         );
     end component;
@@ -78,9 +80,9 @@ architecture behav of waveformGen is
             clk: in std_logic;
             ce: in std_logic;
             pcm_out: out pcm_data_t;
-            note: in note_t;
             volume: in volume_t;
             counter: in unsigned(sample_rate'length - 1 downto 0);
+            period: in unsigned(sample_rate'length - 1 downto 0);
             reset: in std_logic
         );
     end component;
@@ -90,9 +92,9 @@ architecture behav of waveformGen is
             clk: in std_logic;
             ce: in std_logic;
             pcm_out: out pcm_data_t;
-            note: in note_t;
             volume: in volume_t;
             counter: in unsigned(sample_rate'length - 1 downto 0);
+            period: in unsigned(sample_rate'length - 1 downto 0);
             reset: in std_logic
         );
     end component;
@@ -112,9 +114,9 @@ begin
             clk => clk,
             ce => ce,
             pcm_out => pcm_out,
-            note => note,
             volume => volume,
             counter => counter,
+            period => period,
             reset => reset
         );
     end generate square_gen;
@@ -124,9 +126,9 @@ begin
             clk => clk,
             ce => ce,
             pcm_out => pcm_out,
-            note => note,
             volume => volume,
             counter => counter,
+            period => period,
             reset => reset
         );
     end generate triangle_gen;
@@ -136,9 +138,9 @@ begin
             clk => clk,
             ce => ce,
             pcm_out => pcm_out,
-            note => note,
             volume => volume,
             counter => counter,
+            period => period,
             reset => reset
         );
     end generate saw_gen;
@@ -158,18 +160,22 @@ begin
             clk => clk,
             ce => ce,
             pcm_out => pcm_out,
-            note => note,
             volume => volume,
             counter => counter,
+            period => period,
             reset => reset
         );
     end generate sine_gen;
 
     process (clk)
+    variable my_period: unsigned(sample_rate'length - 1 downto 0);
     begin
         if rising_edge(clk) then
             if ce = '1' then
-                if counter < sample_rate then
+                my_period := to_unsigned(period_from_note(note), sample_rate'length);
+                period <= my_period;
+        
+                if counter < my_period then
                     counter <= counter + 1;
                 else
                     counter <= to_unsigned(0, sample_rate'length);
@@ -178,6 +184,7 @@ begin
         
             if reset = '1' then
                 counter <= to_unsigned(0, sample_rate'length);
+                period <= to_unsigned(0, sample_rate'length);
             end if;
         end if;
     end process;

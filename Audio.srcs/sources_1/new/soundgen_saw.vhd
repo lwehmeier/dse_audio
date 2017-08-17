@@ -38,9 +38,9 @@ entity soundgen_saw is
         clk: in std_logic;
         ce: in std_logic;
         pcm_out: out pcm_data_t;
-        note: in note_t;
         volume: in volume_t;
         counter: in unsigned(sample_rate'length - 1 downto 0);
+        period: in unsigned(sample_rate'length - 1 downto 0);
         reset: in std_logic
     );
 end soundgen_saw;
@@ -48,17 +48,12 @@ end soundgen_saw;
 architecture behav of soundgen_saw is
 begin
     process (clk)
-    variable period: integer;
-    variable p_counter: integer;
+    variable pcm: pcm_data_t;
     begin
         if rising_edge(clk) then
-            if ce = '1' then
-                period := period_from_note(note);
-                
-                if period > 0 then
-                    p_counter := to_integer(counter) mod period; 
-                    pcm_out <= resize(pcm_min + (pcm_max - pcm_min) * to_signed(p_counter, sample_rate'length + 1) / period, pcm_data_t'length);
-                end if;
+            if ce = '1' and period > 0 then
+                pcm := resize(pcm_min + (pcm_max - pcm_min) * signed('0' & counter) / signed('0' & period), pcm_data_t'length); 
+                pcm_out <= apply_volume(pcm, volume);
             end if;
         end if;
     end process;

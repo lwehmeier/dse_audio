@@ -38,9 +38,9 @@ entity soundgen_triangle is
         clk: in std_logic;
         ce: in std_logic;
         pcm_out: out pcm_data_t;
-        note: in note_t;
         volume: in volume_t;
         counter: in unsigned(sample_rate'length - 1 downto 0);
+        period: in unsigned(sample_rate'length - 1 downto 0);
         reset: in std_logic
     );
 end soundgen_triangle;
@@ -48,29 +48,22 @@ end soundgen_triangle;
 architecture behav of soundgen_triangle is
 begin
     process (clk)
-    variable period: integer;
-    variable p_counter: integer;
     variable period_over_4: integer := 0;
     variable pcm: pcm_data_t := to_signed(0, pcm_data_t'length);
     begin
         if rising_edge(clk) then
-            if ce = '1' then
-                period := period_from_note(note);
-                
-                if period > 0 then
-                    p_counter := to_integer(counter) mod period; 
-                    period_over_4 := period / 4;
-                    if p_counter >= 0 and p_counter < period_over_4 then
-                        pcm := resize(pcm_max * to_signed(p_counter, sample_rate'length) / period_over_4, pcm_data_t'length);
-                    elsif p_counter >= period_over_4 and p_counter < 2 * period_over_4 then
-                        pcm := resize(pcm_max - (pcm_max * (to_signed(p_counter, sample_rate'length) - period_over_4) / period_over_4), pcm_data_t'length);
-                    elsif p_counter >= 2 * period_over_4 and p_counter < 3 * period_over_4 then
-                        pcm := resize(-(-pcm_min * (to_signed(p_counter, sample_rate'length) - 2 * period_over_4) / period_over_4), pcm_data_t'length);
-                    else
-                        pcm := resize(pcm_min + (-pcm_min * (to_signed(p_counter, sample_rate'length) - 3 * period_over_4) / period_over_4), pcm_data_t'length);
-                    end if;
-                    pcm_out <= pcm;
+            if ce = '1' and period > 0 then
+                period_over_4 := to_integer(period) / 4;
+                if counter >= 0 and counter < period_over_4 then
+                    pcm := resize(pcm_max * signed('0' & counter) / period_over_4, pcm_data_t'length);
+                elsif counter >= period_over_4 and counter < 2 * period_over_4 then
+                    pcm := resize(pcm_max - (pcm_max * (signed('0' & counter) - period_over_4) / period_over_4), pcm_data_t'length);
+                elsif counter >= 2 * period_over_4 and counter < 3 * period_over_4 then
+                    pcm := resize(-(-pcm_min * (signed('0' & counter) - 2 * period_over_4) / period_over_4), pcm_data_t'length);
+                else
+                    pcm := resize(pcm_min + (-pcm_min * (signed('0' & counter) - 3 * period_over_4) / period_over_4), pcm_data_t'length);
                 end if;
+                pcm_out <= apply_volume(pcm, volume);
             end if;
         end if;
     end process;

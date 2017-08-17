@@ -39,9 +39,9 @@ entity soundgen_sine is
         clk: in std_logic;
         ce: in std_logic;
         pcm_out: out pcm_data_t;
-        note: in note_t;
         volume: in volume_t;
         counter: in unsigned(sample_rate'length - 1 downto 0);
+        period: in unsigned(sample_rate'length - 1 downto 0);
         reset: in std_logic
     );
 end soundgen_sine;
@@ -49,17 +49,12 @@ end soundgen_sine;
 architecture behav of soundgen_sine is
 begin
     process (clk)
-    variable period: integer;
-    variable p_counter: integer;
+    variable pcm: pcm_data_t;
     begin
         if rising_edge(clk) then
-            if ce = '1' then
-                period := period_from_note(note);
-                
-                if period > 0 then
-                    p_counter := to_integer(counter) mod period; 
-                    pcm_out <= sin(p_counter * 511 / period);
-                end if;
+            if ce = '1' and period > 0 then
+                pcm := sin(to_integer(counter * 511 / period));
+                pcm_out <= apply_volume(pcm, volume);
             end if;
         end if;
     end process;
