@@ -45,5 +45,5 @@ end Filter;
 architecture Behavioral of Filter is
 
 begin
-    PCM_OUT <= "0000000000000000";
+    PCM_OUT <= PCM_IN;
 end Behavioral;

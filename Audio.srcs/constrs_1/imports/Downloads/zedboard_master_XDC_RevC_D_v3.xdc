@@ -92,7 +92,7 @@ set_property PACKAGE_PIN Y10  [get_ports {AUDIO_NC}];  # "JA3"
 set_property PACKAGE_PIN AA9  [get_ports {AUDIO_SHDN}];  # "JA4" shutdown active low
 
 # Lower Row
-set_property PACKAGE_PIN AB11 [get_ports {JA7}];  # "JA7"
+set_property PACKAGE_PIN AB11 [get_ports {midi_rx}];  # "JA7"
 set_property PACKAGE_PIN AB10 [get_ports {JA8}];  # "JA8"
 set_property PACKAGE_PIN AB9  [get_ports {JA9}];  # "JA9"
 set_property PACKAGE_PIN AA8  [get_ports {JA10}];  # "JA10"
@@ -101,38 +101,38 @@ set_property PACKAGE_PIN AA8  [get_ports {JA10}];  # "JA10"
 # ----------------------------------------------------------------------------
 # JB Pmod - Bank 13
 # ---------------------------------------------------------------------------- 
-set_property PACKAGE_PIN W12 [get_ports {midi_rx}];  # "JB1"
-set_property PACKAGE_PIN V8 [get_ports {JB10}];  # "JB10"
-set_property PACKAGE_PIN W11 [get_ports {JB2}];  # "JB2"
-set_property PACKAGE_PIN V10 [get_ports {JB3}];  # "JB3"
-set_property PACKAGE_PIN W8 [get_ports {JB4}];  # "JB4"
-set_property PACKAGE_PIN V12 [get_ports {JB7}];  # "JB7"
-set_property PACKAGE_PIN W10 [get_ports {JB8}];  # "JB8"
-set_property PACKAGE_PIN V9 [get_ports {JB9}];  # "JB9"
+set_property PACKAGE_PIN W12 [get_ports {UART_RX_OUT[0]}];  # "JB1"
+set_property PACKAGE_PIN V8 [get_ports {UART_RX_OUT[7]}];  # "JB10"
+set_property PACKAGE_PIN W11 [get_ports {UART_RX_OUT[1]}];  # "JB2"
+set_property PACKAGE_PIN V10 [get_ports {UART_RX_OUT[2]}];  # "JB3"
+set_property PACKAGE_PIN W8 [get_ports {UART_RX_OUT[3]}];  # "JB4"
+set_property PACKAGE_PIN V12 [get_ports {UART_RX_OUT[4]}];  # "JB7"
+set_property PACKAGE_PIN W10 [get_ports {UART_RX_OUT[5]}];  # "JB8"
+set_property PACKAGE_PIN V9 [get_ports {UART_RX_OUT[6]}];  # "JB9"
 
 # ----------------------------------------------------------------------------
 # JC Pmod - Bank 13
 # ---------------------------------------------------------------------------- 
-set_property PACKAGE_PIN AB6 [get_ports {JC1_N}];  # "JC1_N"
-set_property PACKAGE_PIN AB7 [get_ports {JC1_P}];  # "JC1_P"
-set_property PACKAGE_PIN AA4 [get_ports {JC2_N}];  # "JC2_N"
-set_property PACKAGE_PIN Y4  [get_ports {JC2_P}];  # "JC2_P"
-set_property PACKAGE_PIN T6  [get_ports {JC3_N}];  # "JC3_N"
-set_property PACKAGE_PIN R6  [get_ports {JC3_P}];  # "JC3_P"
-set_property PACKAGE_PIN U4  [get_ports {JC4_N}];  # "JC4_N"
-set_property PACKAGE_PIN T4  [get_ports {JC4_P}];  # "JC4_P"
+set_property PACKAGE_PIN AB6 [get_ports {PCM_OUT[0]}];  # "JC1_N"
+set_property PACKAGE_PIN AB7 [get_ports {PCM_OUT[1]}];  # "JC1_P"
+set_property PACKAGE_PIN AA4 [get_ports {PCM_OUT[2]}];  # "JC2_N"
+set_property PACKAGE_PIN Y4  [get_ports {PCM_OUT[3]}];  # "JC2_P"
+set_property PACKAGE_PIN T6  [get_ports {PCM_OUT[4]}];  # "JC3_N"
+set_property PACKAGE_PIN R6  [get_ports {PCM_OUT[5]}];  # "JC3_P"
+set_property PACKAGE_PIN U4  [get_ports {PCM_OUT[6]}];  # "JC4_N"
+set_property PACKAGE_PIN T4  [get_ports {PCM_OUT[7]}];  # "JC4_P"
 
 # ----------------------------------------------------------------------------
 # JA Pmod - Bank 13
 # ---------------------------------------------------------------------------- 
-set_property PACKAGE_PIN W7 [get_ports {JD1_N}];  # "JD1_N"
-set_property PACKAGE_PIN V7 [get_ports {JD1_P}];  # "JD1_P"
-set_property PACKAGE_PIN V4 [get_ports {JD2_N}];  # "JD2_N"
-set_property PACKAGE_PIN V5 [get_ports {JD2_P}];  # "JD2_P"
-set_property PACKAGE_PIN W5 [get_ports {JD3_N}];  # "JD3_N"
-set_property PACKAGE_PIN W6 [get_ports {JD3_P}];  # "JD3_P"
-set_property PACKAGE_PIN U5 [get_ports {JD4_N}];  # "JD4_N"
-set_property PACKAGE_PIN U6 [get_ports {JD4_P}];  # "JD4_P"
+set_property PACKAGE_PIN W7 [get_ports {PCM_OUT[8]}];  # "JD1_N"
+set_property PACKAGE_PIN V7 [get_ports {PCM_OUT[9]}];  # "JD1_P"
+set_property PACKAGE_PIN V4 [get_ports {PCM_OUT[10]}];  # "JD2_N"
+set_property PACKAGE_PIN V5 [get_ports {PCM_OUT[11]}];  # "JD2_P"
+set_property PACKAGE_PIN W5 [get_ports {PCM_OUT[12]}];  # "JD3_N"
+set_property PACKAGE_PIN W6 [get_ports {PCM_OUT[13]}];  # "JD3_P"
+set_property PACKAGE_PIN U5 [get_ports {PCM_OUT[14]}];  # "JD4_N"
+set_property PACKAGE_PIN U6 [get_ports {PCM_OUT[15]}];  # "JD4_P"
 
 # ----------------------------------------------------------------------------
 # OLED Display - Bank 13

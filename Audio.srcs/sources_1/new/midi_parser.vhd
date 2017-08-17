@@ -68,7 +68,7 @@ begin
                     parsedPitch<=note_empty;
                     if noteOff='0' then
                         if rxData(7) = '0' then
-                            parsedPitch <= rxData;
+                            parsedPitch(7 downto 1) <= rxData(6 downto 0);
                         end if;
                     end if;
                     

@@ -17,8 +17,8 @@ signal ENABLE    : std_logic  := '0';
 signal DAC_OUT   : std_logic  := '0';
 signal rx : std_logic := '1';
 signal rxdata : std_logic_vector(7 downto 0);
-signal note : std_logic_vector(7 downto 0);
-signal volume : std_logic_vector(7 downto 0);
+signal note : note_vector_t;
+signal volume : volume_vector_t;
 signal dready : std_logic;
 
 begin
@@ -68,7 +68,7 @@ ENABLE <= '1'; -- enable the CE
 
 
 rx <= '0';--send note on ch 0, start bit; LSB FIRST!!!
-wait for 200us; 
+wait for 104us; 
 rx <= '0'; --0000
 wait for 416us; 
 rx <= '1'; --1
@@ -83,7 +83,7 @@ wait for 150us;
 wait for 500us;
 
 rx <= '0';--send pitch 64
-wait for 250us; 
+wait for 104us; 
 rx <= '0'; --0000
 wait for 416us; 
 rx <= '0';
@@ -100,7 +100,7 @@ wait for 500us;
 
 
 rx <= '0';--send velocity 64
-wait for 250us; 
+wait for 104us; 
 rx <= '0'; --0000
 wait for 416us; 
 rx <= '0';

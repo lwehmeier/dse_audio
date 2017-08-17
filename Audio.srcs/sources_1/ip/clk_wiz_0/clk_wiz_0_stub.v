@@ -1,9 +1,9 @@
 // Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2016.4 (win64) Build 1756540 Mon Jan 23 19:11:23 MST 2017
-// Date        : Wed Aug 16 11:15:41 2017
+// Date        : Thu Aug 17 09:38:48 2017
 // Host        : HTI14 running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub D:/audio2/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_stub.v
+// Command     : write_verilog -force -mode synth_stub D:/audio3/Audio.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_stub.v
 // Design      : clk_wiz_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg484-1
