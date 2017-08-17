@@ -37,6 +37,7 @@ entity midi_parser is
            newData : in STD_LOGIC;
            note : out note_vector_t;
            volume : out volume_vector_t;
+           note_ready : out STD_LOGIC_VECTOR (mix_channel_count-1 downto 0);
            clk : in STD_LOGIC);
     type state_t is (STATE_CMD,STATE_BYTE1, STATE_BYTE2);  
 end midi_parser;
@@ -47,6 +48,7 @@ signal parsedPitch : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigne
 signal parsedVelocity : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigned(0,8));
 signal noteOff : std_logic := '0';
 signal currentChannel : unsigned(2 downto 0);
+signal note_ready_int : STD_LOGIC_VECTOR(mix_channel_count-1 downto 0) := std_logic_vector(to_unsigned(0, mix_channel_count));
 begin
 
 statemachine : process (CLK)
@@ -54,6 +56,7 @@ begin
     if rising_edge(clk) and newData='1' then
         case cstate is
             when STATE_CMD => 
+                    note_ready_int(to_integer(currentChannel)) <= '0';
                     currentChannel <= unsigned(rxData(2 downto 0));
                     if rxData(7 downto 4) = "1001" then
                         cstate <= STATE_BYTE1;
@@ -85,10 +88,11 @@ begin
                         volume(to_integer(currentChannel)) <=volume_zero;
                     end if;
                     note(to_integer(currentChannel)) <= parsedPitch;
+                    note_ready_int(to_integer(currentChannel)) <= '1';
                 
                 when others => cstate <= STATE_CMD;
         end case;
     end if;
 end process;
-
+note_ready <= note_ready_int;
 end Behavioral;

@@ -46,6 +46,7 @@ component midi_parser is
            newData : in STD_LOGIC;
            note : out note_vector_t;
            volume : out volume_vector_t;
+           note_ready : out STD_LOGIC_VECTOR (mix_channel_count - 1 downto 0);
            clk : in STD_LOGIC);  
 end component;
 component DAC is
@@ -70,7 +71,6 @@ end component;
 component clk_wiz_0 
 port (
   clk_out1 : out std_logic;
-  reset   : in std_logic;
   clk_in1 : in std_logic
  );
  end component;
