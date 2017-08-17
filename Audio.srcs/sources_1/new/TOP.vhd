@@ -55,7 +55,7 @@ signal mix2mixfilter : pcm_data_t;
 signal mixfilter2DAC : pcm_data_t;
 signal mixCtrl : add_mask_t := "1111";
 signal tg_note : note_vector_t;
-signal tg_volume : volume_vector_t;
+signal tg_volume : env_volume_vector_t;
 signal tg2_note : note_vector_t;
 signal tg2_volume : volume_vector_t;
 signal note_ready : std_logic_vector(mix_channel_count - 1 downto 0);
@@ -100,9 +100,9 @@ wg_gen_loop : for i in 0 to mix_channel_count-1 generate
         ATTACK_VOLUME    => x"ff",                       -- Peak volume
         DECAY_TIME       => x"00",   -- Decay time
         RELEASE_TIME     => x"00",   -- Release time
-        ATTACK_INCREASE  => to_volume_t(1),                       -- Volume per attack step to add
-        DECAY_DECREASE   => to_volume_t(1),                       -- Volume per decay step to subtract
-        RELEASE_DECREASE => to_volume_t(1),                       -- Volume per release step to subtract
+        ATTACK_INCREASE  => to_env_volume_t(1),                       -- Volume per attack step to add
+        DECAY_DECREASE   => to_env_volume_t(1),                       -- Volume per decay step to subtract
+        RELEASE_DECREASE => to_env_volume_t(1),                       -- Volume per release step to subtract
         
         -- Output volume
         VOL_OUT  => tg2_volume(i),   -- Volume Output

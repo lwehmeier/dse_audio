@@ -36,7 +36,7 @@ entity midi_parser is
     Port ( rxData : in STD_LOGIC_VECTOR (7 downto 0);
            newData : in STD_LOGIC;
            note : out note_vector_t;
-           volume : out volume_vector_t;
+           volume : out env_volume_vector_t;
            note_ready : out STD_LOGIC_VECTOR (mix_channel_count-1 downto 0);
            clk : in STD_LOGIC);
     type state_t is (STATE_CMD,STATE_BYTE1, STATE_BYTE2);  
@@ -85,7 +85,7 @@ begin
                             volume(to_integer(currentChannel))(7 downto 1) <= rxData(6 downto 0);
                         end if;
                     else
-                        volume(to_integer(currentChannel)) <=volume_zero;
+                        volume(to_integer(currentChannel)) <= env_volume_zero;
                     end if;
                     note(to_integer(currentChannel)) <= parsedPitch;
                     note_ready_int(to_integer(currentChannel)) <= '1';

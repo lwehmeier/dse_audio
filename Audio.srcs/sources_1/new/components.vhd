@@ -45,7 +45,7 @@ component midi_parser is
     Port ( rxData : in STD_LOGIC_VECTOR (7 downto 0);
            newData : in STD_LOGIC;
            note : out note_vector_t;
-           volume : out volume_vector_t;
+           volume : out env_volume_vector_t;
            note_ready : out STD_LOGIC_VECTOR (mix_channel_count - 1 downto 0);
            clk : in STD_LOGIC);  
 end component;
@@ -118,14 +118,14 @@ component Envelope is
         -- the resolution for times is 2.66ms per step
         -- TODO: Maybe add a lookup table to have exponential time steps
         NOTE_IN        : in note_t;                         -- Note Input
-        SUSTAIN_VOLUME : in volume_t;                       -- Sustain volume
+        SUSTAIN_VOLUME : in env_volume_t;                       -- Sustain volume
         ATTACK_TIME    : in std_logic_vector(7 downto 0);   -- Attack time
-        ATTACK_VOLUME  : in volume_t;                       -- Peak volume
+        ATTACK_VOLUME  : in env_volume_t;                       -- Peak volume
         DECAY_TIME     : in std_logic_vector(7 downto 0);   -- Decay time
         RELEASE_TIME   : in std_logic_vector(7 downto 0);   -- Release time
-        ATTACK_INCREASE  : in volume_t;                       -- Volume per attack step to add
-        DECAY_DECREASE   : in volume_t;                       -- Volume per decay step to subtract
-        RELEASE_DECREASE : in volume_t;                       -- Volume per release step to subtract
+        ATTACK_INCREASE  : in env_volume_t;                       -- Volume per attack step to add
+        DECAY_DECREASE   : in env_volume_t;                       -- Volume per decay step to subtract
+        RELEASE_DECREASE : in env_volume_t;                       -- Volume per release step to subtract
         
         -- Output volume
         VOL_OUT  : out volume_t;   -- Volume Output

@@ -16,14 +16,14 @@ entity Envelope is
         -- the resolution for times is 2.66ms per step
         -- TODO: Maybe add a lookup table to have exponential time steps
         NOTE_IN          : in note_t;                         -- Note Input
-        SUSTAIN_VOLUME   : in volume_t;                       -- Sustain volume
+        SUSTAIN_VOLUME   : in env_volume_t;                       -- Sustain volume
         ATTACK_TIME      : in std_logic_vector(7 downto 0);   -- Attack time
-        ATTACK_VOLUME    : in volume_t;                       -- Peak volume
+        ATTACK_VOLUME    : in env_volume_t;                       -- Peak volume
         DECAY_TIME       : in std_logic_vector(7 downto 0);   -- Decay time
         RELEASE_TIME     : in std_logic_vector(7 downto 0);   -- Release time
-        ATTACK_INCREASE  : in volume_t;                       -- Volume per attack step to add
-        DECAY_DECREASE   : in volume_t;                       -- Volume per decay step to subtract
-        RELEASE_DECREASE : in volume_t;                       -- Volume per release step to subtract
+        ATTACK_INCREASE  : in env_volume_t;                       -- Volume per attack step to add
+        DECAY_DECREASE   : in env_volume_t;                       -- Volume per decay step to subtract
+        RELEASE_DECREASE : in env_volume_t;                       -- Volume per release step to subtract
         
         -- Output volume
         VOL_OUT  : out volume_t;   -- Volume Output
@@ -49,8 +49,8 @@ signal TS_RESET : STD_LOGIC := '0';
 signal TS_TOP_VAL : STD_LOGIC_VECTOR(7 downto 0);
 
 signal CURRENT_NOTE : note_t := note_empty;
-signal CURRENT_SUSTAIN_VOLUME : volume_t := volume_zero;
-signal CURRENT_VOLUME : volume_t := volume_zero;
+signal CURRENT_SUSTAIN_VOLUME : env_volume_t := env_volume_zero;
+signal CURRENT_VOLUME : env_volume_t := env_volume_zero;
 begin
 -- Timestep generation
 TIMER_TB :  CEGEN48k 
@@ -118,7 +118,7 @@ begin
                 if RELEASE_TIME = x"00" or RELEASE_DECREASE = x"00" then -- no release was configured, so skip the release state entirely
                     NEXT_STATE <= IDLE;
                     CURRENT_NOTE <= note_empty;
-                    CURRENT_VOLUME <= volume_zero;
+                    CURRENT_VOLUME <= env_volume_zero;
                 else 
                     NEXT_STATE <= RELEASE; -- we already have a note, which was released, so enter the release phase.
                 end if;
@@ -138,7 +138,7 @@ begin
                     end if;
                 else
                     NEXT_STATE <= ATTACK;  -- attack and decay were configured, so begin at volume zero and go to attack state
-                    CURRENT_VOLUME <= volume_zero;
+                    CURRENT_VOLUME <= env_volume_zero;
                 end if;
             end if;
         elsif INCREASE = '1' then
@@ -165,10 +165,10 @@ begin
                         CURRENT_VOLUME <= std_logic_vector(unsigned(CURRENT_VOLUME) - unsigned(DECAY_DECREASE));
                     end if;
                 when RELEASE =>
-                    if signed('0' & CURRENT_VOLUME) - signed('0' & RELEASE_DECREASE) <= signed('0' & volume_zero) then
+                    if signed('0' & CURRENT_VOLUME) - signed('0' & RELEASE_DECREASE) <= signed('0' & env_volume_zero) then
                         NEXT_STATE <= IDLE;
                         CURRENT_NOTE <= note_empty;
-                        CURRENT_VOLUME <= volume_zero;
+                        CURRENT_VOLUME <= env_volume_zero;
                     else
                         CURRENT_VOLUME <= std_logic_vector(unsigned(CURRENT_VOLUME) - unsigned(RELEASE_DECREASE));
                     end if;
@@ -178,6 +178,6 @@ begin
     end if; 
 end process;
 
-VOL_OUT <= CURRENT_VOLUME;
+VOL_OUT <= '0' & CURRENT_VOLUME;
 NOTE_OUT <= CURRENT_NOTE;
 end Behavioral;

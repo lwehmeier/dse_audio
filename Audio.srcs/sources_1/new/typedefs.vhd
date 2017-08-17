@@ -58,8 +58,11 @@ package typedefs is
     
     subtype volume_t is std_logic_vector(8 downto 0);
     type volume_vector_t is array(mix_channel_count-1 downto 0) of volume_t;
-    constant volume_zero : volume_t := "000000000";
-    function to_volume_t(x: integer) return volume_t;
+    
+    subtype env_volume_t is std_logic_vector(7 downto 0);
+    type env_volume_vector_t is array(mix_channel_count - 1 downto 0) of env_volume_t;
+    constant env_volume_zero : env_volume_t := x"00";
+    function to_env_volume_t(x: integer) return env_volume_t;
     
     subtype add_mask_t is std_logic_vector(mix_channel_count-1 downto 0);
     subtype dac_out_t is std_logic;
@@ -72,8 +75,8 @@ package body typedefs is
         return to_signed(x, pcm_data_width);
     end to_pcm_data_t;
     
-    function to_volume_t(x: integer) return volume_t is
+    function to_env_volume_t(x: integer) return env_volume_t is
     begin
-        return std_logic_vector(to_unsigned(x, volume_t'length));
-    end to_volume_t;
+        return std_logic_vector(to_unsigned(x, env_volume_t'length));
+    end to_env_volume_t;
 end typedefs;
