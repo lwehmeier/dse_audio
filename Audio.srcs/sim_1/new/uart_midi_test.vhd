@@ -11,6 +11,7 @@ architecture Behavioral of uart_midi_test is
 
 -- signal definitions
 signal GCLK      : std_logic  := '0';
+signal CLK      : std_logic  := '0';
 signal CE        : std_logic  := '0';
 signal PCM_DATA  : pcm_data_t := to_pcm_data_t(0);
 signal ENABLE    : std_logic  := '0';
@@ -22,6 +23,7 @@ signal volume : volume_vector_t;
 signal dready : std_logic;
 
 begin
+clk_gen: clk_wiz_0 port map(clk_out1 => GCLK, reset => '0', clk_in1 => CLK);
 -- Instantiate components
 CE_GEN: component CEGEN48k 
         generic map (
@@ -53,9 +55,9 @@ uut:    component midi_parser
 -- System clock generation
 clk_process: process
 begin
-GCLK <= '0';
+CLK <= '0';
 wait for 5 ns;
-GCLK <= '1';
+CLK <= '1';
 wait for 5 ns;
 end process;
 
@@ -88,6 +90,8 @@ rx <= '0'; --0000
 wait for 416us; 
 rx <= '0';
 wait for 104us; 
+rx <= '0';
+wait for 104us; 
 rx <= '1';
 wait for 104us; 
 rx <= '0';
@@ -103,6 +107,8 @@ rx <= '0';--send velocity 64
 wait for 104us; 
 rx <= '0'; --0000
 wait for 416us; 
+rx <= '0';
+wait for 104us; 
 rx <= '0';
 wait for 104us; 
 rx <= '1';
@@ -135,6 +141,8 @@ rx <= '0'; --0000
 wait for 416us; 
 rx <= '0';
 wait for 104us; 
+rx <= '0';
+wait for 104us; 
 rx <= '1';
 wait for 104us; 
 rx <= '0';
@@ -150,6 +158,8 @@ rx <= '0';--send velocity 64
 wait for 250us; 
 rx <= '0'; --0000
 wait for 416us; 
+rx <= '0';
+wait for 104us; 
 rx <= '0';
 wait for 104us; 
 rx <= '1';

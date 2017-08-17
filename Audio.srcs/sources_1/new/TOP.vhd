@@ -99,7 +99,7 @@ filter_gen_loop : for i in 0 to mix_channel_count-1 generate
 end generate filter_gen_loop;
 m_mix: Mixer port map (PCM_IN_VECT => wgfilter2mix,PCM_OUT=>mix2mixfilter,reset=>reset,CLK=>CLK,CE=>ce48k, ADD_MASK=>mixCtrl);
 m_mixfilter: filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => mix2mixfilter, PCM_OUT => mixfilter2dac, CLK => CLK, CE => ce48k);
-m_dac: DAC port map ( CLK=>CLK, CE => ce48k, PCM_IN => mixfilter2dac, DAC_OUT => dac_out);
+m_dac: entity work.DAC(DeltaSigmaDAC) port map ( CLK=>CLK, CE => ce48k, PCM_IN => mixfilter2dac, DAC_OUT => dac_out);
 
 debug : process(CLK)
 begin

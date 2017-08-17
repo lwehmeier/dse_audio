@@ -68,7 +68,7 @@ begin
                     parsedPitch<=note_empty;
                     if noteOff='0' then
                         if rxData(7) = '0' then
-                            parsedPitch(7 downto 1) <= rxData(6 downto 0);
+                            parsedPitch(6 downto 0) <= rxData(6 downto 0);
                         end if;
                     end if;
                     
@@ -78,8 +78,8 @@ begin
                     parsedVelocity<=volume_zero;
                     if noteOff='0' then
                         if rxData(7) = '0' then
-                            parsedVelocity <= rxData;
-                            volume(to_integer(currentChannel)) <= rxData;
+                            parsedVelocity(7 downto 1) <= rxData(6 downto 0);
+                            volume(to_integer(currentChannel))(7 downto 1) <= rxData(6 downto 0);
                         end if;
                     else
                         volume(to_integer(currentChannel)) <=volume_zero;

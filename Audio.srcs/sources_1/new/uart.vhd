@@ -41,8 +41,8 @@ architecture Behavioral of UART_RX_CTRL is
 
 type RX_STATE_TYPE is (READY, DELAY, GET_BIT, READ_BIT);
 
-constant BIT_TMR_MAX : std_logic_vector(13 downto 0) := std_logic_vector(to_unsigned(10416,14)); --10416 = (round(100MHz / 9600)) - 1
-constant DELAY_COUNTER_MAX : std_logic_vector(13 downto 0) := std_logic_vector(to_unsigned(13888,14)); --"11011001000000";  -- 13888 = ((BIT_TMR_MAX/3) + BIT_TMR_MAX )aiming for bit
+constant BIT_TMR_MAX : std_logic_vector(13 downto 0) := std_logic_vector(to_unsigned(10239,14)); --10416 = (round(100MHz / 9600)) - 1; 10050
+constant DELAY_COUNTER_MAX : std_logic_vector(13 downto 0) := std_logic_vector(to_unsigned(5250,14)); --"11011001000000";  -- 13888 = ((BIT_TMR_MAX/3) + BIT_TMR_MAX )aiming for bit
 constant BIT_INDEX_MAX : natural := 8;
 
 --flag to indicate to move from the delay RXState to the next state

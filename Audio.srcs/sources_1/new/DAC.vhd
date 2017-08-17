@@ -11,7 +11,7 @@ entity DAC is
            DAC_OUT : out dac_out_t);
 end DAC;
 
-architecture Behavioral of DAC is
+architecture DeltaSigmaDAC of DAC is
 signal PCM_SOURCE : pcm_data_t := to_pcm_data_t(0);
 signal PCM_DDC_OUT : pcm_data_t := to_pcm_data_t(0);
 signal ACCUMULATOR : pcm_data_t := to_pcm_data_t(0);
@@ -38,4 +38,31 @@ end process;
 
 -- DAC output
 DAC_OUT <= not ACCUMULATOR(pcm_data_width-1);
-end Behavioral;
+end DeltaSigmaDAC;
+
+architecture PWMDAC of DAC is
+constant OUTPUT_BW : integer := 11;
+signal TIMER_VAL : signed(OUTPUT_BW-1 downto 0) := to_signed(-1024, OUTPUT_BW);
+signal CUR_SAMPLE : signed(OUTPUT_BW-1 downto 0) := to_signed(0, OUTPUT_BW);
+
+begin
+
+-- timer value evaluation
+OUTPUT_PROC : process (CLK)
+begin
+    if rising_edge(CLK) then
+        if CE = '1' then
+            CUR_SAMPLE <= PCM_IN(pcm_data_width - 1 downto pcm_data_width - OUTPUT_BW);
+            TIMER_VAL <= to_signed(-1024, OUTPUT_BW);
+        else
+            TIMER_VAL <= TIMER_VAL + to_signed(1, OUTPUT_BW);
+        end if;
+        
+        if CUR_SAMPLE > TIMER_VAL then
+            DAC_OUT <= '1';
+        else
+            DAC_OUT <= '0';
+        end if;
+    end if;
+end process;
+end PWMDAC;
