@@ -50,15 +50,27 @@ end soundgen_sine;
 
 -- The architecture for the sine sound generator
 architecture behav of soundgen_sine is
+signal reg: pcm_data_t;
 begin
     process (clk)
-    variable pcm: pcm_data_t;
     begin
         if rising_edge(clk) then
-            if ce = '1' and period > 0 then
+            if reset = '1' then
+                reg <= to_signed(0, pcm_data_t'length);
+            elsif ce = '1' and period > 0 then
                 -- lookup the sine in the sine_package with the calculated index for the current period from the sine_lut
-                pcm := sin(to_integer(soundgen_sine_lut.counter_over_period(counter, period)));
-                pcm_out <= apply_volume(pcm, volume);
+                reg <= sin(to_integer(soundgen_sine_lut.counter_over_period(counter, period)));
+            end if;
+        end if;
+    end process;
+    
+    process (clk)
+    begin
+        if rising_edge(clk) then
+            if reset = '1' then
+                pcm_out <= to_signed(0, pcm_data_t'length);
+            else
+                pcm_out <= apply_volume(reg, volume);
             end if;
         end if;
     end process;
