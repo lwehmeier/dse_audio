@@ -33,6 +33,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-- The entity for a lfsr based noise sound generator
 entity soundgen_noise is
     port (
         clk: in std_logic;
@@ -43,6 +44,7 @@ entity soundgen_noise is
     );
 end soundgen_noise;
 
+-- The architecture for the noise sound generator
 architecture behav of soundgen_noise is
 signal rnd32 : std_logic_vector (31 downto 0) := (others=>'0');
 signal rnd16 : std_logic_vector (15 downto 0) := (others=>'0');

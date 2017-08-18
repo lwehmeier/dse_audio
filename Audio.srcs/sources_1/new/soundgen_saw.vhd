@@ -34,6 +34,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-- The entity for the saw sound generator
 entity soundgen_saw is
     port (
         clk: in std_logic;
@@ -46,6 +47,7 @@ entity soundgen_saw is
     );
 end soundgen_saw;
 
+-- The architecture for the saw sound generator
 architecture behav of soundgen_saw is
 begin
     process (clk)
@@ -53,6 +55,7 @@ begin
     begin
         if rising_edge(clk) then
             if ce = '1' and period > 0 then
+                -- lookup the current pcm value in the saw lut for the current period
                 pcm := soundgen_saw_lut.counter_over_period(counter, period); 
                 pcm_out <= apply_volume(pcm, volume);
             end if;

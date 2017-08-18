@@ -33,6 +33,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-- The entity for the square sound generator
 entity soundgen_square is
     port (
         clk: in std_logic;
@@ -45,6 +46,7 @@ entity soundgen_square is
     );
 end soundgen_square;
 
+-- The architecture for the square sound generator
 architecture behav of soundgen_square is
 begin
     process (clk)

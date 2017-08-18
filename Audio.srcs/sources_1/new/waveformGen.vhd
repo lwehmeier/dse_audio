@@ -33,6 +33,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-- This entity is a meta entity used for easier instantiation of the sound generator (generic based)
 entity waveformGen is
     generic (
         wg_type: wg_type_t := wg_SINE
@@ -48,7 +49,9 @@ entity waveformGen is
 end waveformGen;
 
 architecture behav of waveformGen is
+    -- This signal is used in the sound generator to get the current position in the period of the current note
     signal counter: unsigned(sample_rate'length - 1 downto 0) := to_unsigned(0, sample_rate'length);
+    -- The sample count of one period of the current note
     signal period: unsigned(sample_rate'length - 1 downto 0) := to_unsigned(0, sample_rate'length);
     
     component soundgen_square is

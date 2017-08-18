@@ -35,6 +35,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-- The entity for the sine sound generator
 entity soundgen_sine is
     port (
         clk: in std_logic;
@@ -47,6 +48,7 @@ entity soundgen_sine is
     );
 end soundgen_sine;
 
+-- The architecture for the sine sound generator
 architecture behav of soundgen_sine is
 begin
     process (clk)
@@ -54,6 +56,7 @@ begin
     begin
         if rising_edge(clk) then
             if ce = '1' and period > 0 then
+                -- lookup the sine in the sine_package with the calculated index for the current period from the sine_lut
                 pcm := sin(to_integer(soundgen_sine_lut.counter_over_period(counter, period)));
                 pcm_out <= apply_volume(pcm, volume);
             end if;

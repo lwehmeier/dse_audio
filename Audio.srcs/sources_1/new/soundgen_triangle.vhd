@@ -34,6 +34,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-- The entity for a triangle sound generator
 entity soundgen_triangle is
     port (
         clk: in std_logic;
@@ -46,6 +47,7 @@ entity soundgen_triangle is
     );
 end soundgen_triangle;
 
+-- architecture for the triangle generator
 architecture behav of soundgen_triangle is
 begin
     process (clk)
@@ -55,6 +57,7 @@ begin
     begin
         if rising_edge(clk) then
             if ce = '1' and period > 0 then
+                -- use the saw lut to generate a triangle wave
                 period_over_2 := to_integer(period) / 2;
                 if counter < period_over_2 then
                     idx := resize(counter * 2, sample_rate'length);
