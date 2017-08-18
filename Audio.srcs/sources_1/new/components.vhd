@@ -37,8 +37,7 @@ component Mixer is
            PCM_OUT : out pcm_data_t;
            reset : in STD_LOGIC;
            CLK : in STD_LOGIC;
-           CE : in STD_LOGIC;
-           ADD_MASK : in add_mask_t);
+           CE : in STD_LOGIC);
 end component;
 component clk_wiz_0 
 port (

@@ -6,9 +6,7 @@ use IEEE.NUMERIC_STD.ALL;
 package typedefs is
     -- The width of the pcm_data_t type
     constant pcm_data_width: integer := 16;
-    -- The amount of channels the mixer can handle
-    constant mix_channel_count: integer := 4;
-    -- The system frequency
+    constant mix_channel_count: integer := 5;
     constant system_frequency: unsigned := to_unsigned(98304000, 32);
     -- The sample rate
     constant sample_rate: unsigned := to_unsigned(48000, 16);

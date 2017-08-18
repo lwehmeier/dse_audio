@@ -67,9 +67,7 @@ begin
         then
             pcm_buffer:=to_pcm_data_t(0);
             for i in mix_channel_count -1 downto 0 loop
-                if ADD_MASK(i) = '1' then
                     pcm_buffer := pcm_buffer+PCM_IN_VECT(i);
-                end if;
             end loop;
             --pcm_buffer:=tree_adder(PCM_IN_VECT,to_unsigned(0,16),to_unsigned(0,8));
             PCM_OUT<=pcm_buffer;

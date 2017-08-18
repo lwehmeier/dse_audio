@@ -24,13 +24,12 @@ entity TOP is
 end TOP;
 
 architecture Behavioral of TOP is
-constant wg_types_vect : wg_type_vector_t := (wg_NOISE, wg_NOISE, wg_NOISE, wg_NOISE);
+constant wg_types_vect : wg_type_vector_t := (wg_SQUARE, wg_TRIANGLE, wg_SAW, wg_SINE, wg_NOISE);--wg_SQUARE, wg_SAW, wg_TRIANGLE);
 
 signal wg2filter : mix_pcm_vector_t;
 signal wgfilter2mix : mix_pcm_vector_t;
 signal mix2mixfilter : pcm_data_t;
 signal mixfilter2DAC : pcm_data_t;
-signal mixCtrl : add_mask_t := "1111";
 signal tg_note : note_vector_t;
 signal tg_volume : env_volume_vector_t;
 signal tg2_note : note_vector_t;
@@ -96,7 +95,7 @@ end generate wg_gen_loop;
 filter_gen_loop : for i in 0 to mix_channel_count-1 generate
     m_wgfilter_x : filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => wg2filter(i), PCM_OUT => wgfilter2mix(i), CLK => CLK, CE => ce48k);
 end generate filter_gen_loop;
-m_mix: Mixer port map (PCM_IN_VECT => wgfilter2mix,PCM_OUT=>mix2mixfilter,reset=>reset,CLK=>CLK,CE=>ce48k, ADD_MASK=>mixCtrl);
+m_mix: Mixer port map (PCM_IN_VECT => wgfilter2mix,PCM_OUT=>mix2mixfilter,reset=>reset,CLK=>CLK,CE=>ce48k);
 m_mixfilter: filter generic map (filter_type => filter_PASSTHROUGH) port map( PCM_IN => mix2mixfilter, PCM_OUT => mixfilter2dac, CLK => CLK, CE => ce48k);
 m_dac: entity work.DAC(PWMDAC) port map ( CLK=>CLK, CE => ce48k, PCM_IN => mixfilter2dac, DAC_OUT => dac_out);
 
