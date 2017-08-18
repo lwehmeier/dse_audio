@@ -174,7 +174,10 @@ begin
     variable my_period: unsigned(sample_rate'length - 1 downto 0);
     begin
         if rising_edge(clk) then
-            if ce = '1' then
+            if reset = '1' then
+                counter <= to_unsigned(0, sample_rate'length);
+                period <= to_unsigned(0, sample_rate'length);
+            elsif ce = '1' then
                 my_period := to_unsigned(period_from_note(note), sample_rate'length);
                 period <= my_period;
         
@@ -183,11 +186,6 @@ begin
                 else
                     counter <= to_unsigned(0, sample_rate'length);
                 end if;
-            end if;
-        
-            if reset = '1' then
-                counter <= to_unsigned(0, sample_rate'length);
-                period <= to_unsigned(0, sample_rate'length);
             end if;
         end if;
     end process;
