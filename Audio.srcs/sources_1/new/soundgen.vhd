@@ -32,8 +32,11 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-- This package contains helpers for the sound generators
 package soundgen is
+    -- Get the period (in samples) from a note
     function period_from_note(note: note_t) return integer;
+    -- Apply a given volume to a given PCM sample
     function apply_volume(pcm: pcm_data_t; volume: volume_t) return pcm_data_t;
 end package soundgen;
 
@@ -87,6 +90,8 @@ package body soundgen is
     begin
         -- this is linear for now
         --return resize(pcm * signed('0' & volume) / to_signed(256, pcm_data_t'length + volume_t'length), 16);
+        
+        -- Do fixed point math for volume calculation (0 ^= 0%, 256 ^= 100%) 
         return resize(shift_right(shift_left(resize(pcm, pcm_data_t'length + 9), 8) * signed('0' & volume), 16), pcm_data_t'length);
     end apply_volume;
 end package body;
