@@ -78,7 +78,8 @@ package body soundgen is
             -- B 2.025ms * 48000 / 1000ms
             when 71 => return 97;
             
-            when others => return 0;
+            -- A 2.273ms * 48000 / 1000ms
+            when others => return 109;
         end case;
     end period_from_note;
     

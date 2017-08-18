@@ -95,6 +95,9 @@ begin
             wait until clk = '0';
         end loop;
         
+        vol := 256;
+        volume <= std_logic_vector(to_unsigned(vol, 9));
+        
         wait;
     end process;
 end behav;

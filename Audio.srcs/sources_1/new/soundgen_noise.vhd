@@ -44,25 +44,27 @@ entity soundgen_noise is
 end soundgen_noise;
 
 architecture behav of soundgen_noise is
+signal rnd32 : std_logic_vector (31 downto 0) := (others=>'0');
+signal rnd16 : std_logic_vector (15 downto 0) := (others=>'0');
+signal rnd8  : std_logic_vector ( 7 downto 0) := (others=>'0');
 begin
     process (clk)
-    constant poly: signed(pcm_data_t'length downto 0) := to_signed(65521, pcm_data_t'length + 1);
-    variable lfsr: signed(pcm_data_t'length downto 0) := to_signed(1, pcm_data_t'length + 1);
-    variable temp: signed(pcm_data_t'length downto 0);
-    variable rslt: signed(pcm_data_t'length - 1 downto 0);
     begin
         if rising_edge(clk) then
             if ce = '1' then
-                if lfsr = 0 then
-                    lfsr := to_signed(1, pcm_data_t'length + 1);
-                end if;
+                -- 8Bit
+                rnd8(7 downto 1) <= rnd8(6 downto 0);
+                rnd8(0) <= not(rnd8(7) xor rnd8(6) xor rnd8(4));
                 
-                temp := lfsr;
-                lfsr := shift_right(lfsr, 1);
-                lfsr := lfsr xor (-temp and poly);
+                -- 16Bit
+                rnd16(15 downto 1) <= rnd16(14 downto 0);
+                rnd16(0) <= not(rnd16(15) xor rnd16(14) xor rnd16(13) xor rnd16(4));
                 
-                rslt := apply_volume(temp(pcm_data_t'length - 1 downto 0), volume);
-                pcm_out <= rslt;
+                -- 32 Bit
+                rnd32(31 downto 1) <= rnd32(30 downto 0);
+                rnd32(0) <= not(rnd32(31) xor rnd32(22) xor rnd32(2) xor rnd32(1));
+                
+                pcm_out <= apply_volume(signed(rnd16), volume);
             end if;
         end if;
     end process;
