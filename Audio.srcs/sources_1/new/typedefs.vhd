@@ -1,36 +1,6 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 14.08.2017 17:10:32
--- Design Name: 
--- Module Name: typedefs - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.numeric_std.all;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 -- This package contains type definitions for easier interfacing between the modules
 package typedefs is
@@ -54,7 +24,7 @@ package typedefs is
     type filter_type_t is (
         filter_BIQUAD, filter_PASSTHROUGH
     );
-    
+        
     -- This is the type for PCM data used for interfacing with other modules
     subtype pcm_data_t is signed(pcm_data_width - 1 downto 0);
     -- Convert an integer value to pcm data
@@ -92,6 +62,20 @@ package typedefs is
     -- The output type of the DAC
     subtype dac_out_t is std_logic;
     
+    -- Set of variables for envelope generation
+    type envelope_params_t is record
+        ATTACK_TIME      : std_logic_vector(7 downto 0);       -- Attack time
+        ATTACK_VOLUME    : env_volume_t;                       -- Peak volume
+        DECAY_TIME       : std_logic_vector(7 downto 0);       -- Decay time
+        RELEASE_TIME     : std_logic_vector(7 downto 0);       -- Release time
+        ATTACK_INCREASE  : env_volume_t;                       -- Volume per attack step to add
+        DECAY_DECREASE   : env_volume_t;                       -- Volume per decay step to subtract
+        RELEASE_DECREASE : env_volume_t;                       -- Volume per release step to subtract
+    end record;
+    
+    -- This vector is used for interfacing with the generated envelope generator
+    type envelope_params_vector_t is array(mix_channel_count - 1 downto 0) of envelope_params_t;
+    function default_envelope_params return envelope_params_t;
 end package;
 
 package body typedefs is
@@ -104,4 +88,17 @@ package body typedefs is
     begin
         return std_logic_vector(to_unsigned(x, env_volume_t'length));
     end to_env_volume_t;
+    
+    function default_envelope_params return envelope_params_t is
+        variable p: envelope_params_t;
+    begin
+        p.ATTACK_TIME      := x"01";
+        p.RELEASE_TIME     := x"01";
+        p.DECAY_TIME       := x"01";
+        p.ATTACK_INCREASE  := to_env_volume_t(1);
+        p.DECAY_DECREASE   := to_env_volume_t(1);
+        p.RELEASE_DECREASE := to_env_volume_t(1);
+        p.ATTACK_VOLUME    := to_env_volume_t(255);
+        return p;
+    end default_envelope_params;
 end typedefs;

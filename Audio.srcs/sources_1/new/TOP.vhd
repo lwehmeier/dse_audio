@@ -1,32 +1,9 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 14.08.2017 17:43:28
--- Design Name: 
--- Module Name: TOP - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 use work.typedefs.all;
 use work.components.all;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
-use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx leaf cells in this code.
@@ -59,6 +36,7 @@ signal tg_volume : env_volume_vector_t;
 signal tg2_note : note_vector_t;
 signal tg2_volume : volume_vector_t;
 signal note_ready : std_logic_vector(mix_channel_count - 1 downto 0);
+signal env_params : envelope_params_vector_t := (others => default_envelope_params);
 signal CLK : std_logic;
 signal ce48k : std_logic;
 signal uartDR : std_logic;
@@ -81,7 +59,7 @@ PCM_OUT<=std_logic_vector(mixfilter2dac);
 
 clk_gen: clk_wiz_0 port map(clk_out1 => CLK, clk_in1 => gclk);
 rxUart: UART_RX_CTRL port map (CLK     => CLK, UART_RX => midi_rx, DATA => uartData, READ_DATA => uartDR); --might need to fix baudrate and start bit?
-midi: midi_parser port map (CLK     => CLK, rxData => uartData,  newData => uartDR,volume => tg_volume, note => tg_note, note_ready => note_ready);
+midi: midi_parser port map (CLK     => CLK, rxData => uartData,  newData => uartDR,volume => tg_volume, note => tg_note, note_ready => note_ready, envelope_params => env_params);
 ce_gen: CEGEN48k generic map(BIT_WIDTH => 16) port map(GCLK => CLK, OUTPUT => ce48k, ENABLE => '1', RESET => reset, TOP_VAL => std_logic_vector(to_unsigned(2047,16)));
 wg_gen_loop : for i in 0 to mix_channel_count-1 generate
     m_env : Envelope port map (
@@ -96,14 +74,7 @@ wg_gen_loop : for i in 0 to mix_channel_count-1 generate
         -- TODO: Maybe add a lookup table to have exponential time steps
         NOTE_IN          => tg_note(i),                         -- Note Input
         SUSTAIN_VOLUME   => tg_volume(i),                       -- Sustain volume
-        ATTACK_TIME      => x"00",   -- Attack time
-        ATTACK_VOLUME    => x"ff",                       -- Peak volume
-        DECAY_TIME       => x"00",   -- Decay time
-        RELEASE_TIME     => x"00",   -- Release time
-        ATTACK_INCREASE  => to_env_volume_t(1),                       -- Volume per attack step to add
-        DECAY_DECREASE   => to_env_volume_t(1),                       -- Volume per decay step to subtract
-        RELEASE_DECREASE => to_env_volume_t(1),                       -- Volume per release step to subtract
-        
+        PARAMS           => env_params(i),                      -- parameter passthrough
         -- Output volume
         VOL_OUT  => tg2_volume(i),   -- Volume Output
         NOTE_OUT => tg2_note(i)     -- Note Output, used to "hold" the note for the release time.  

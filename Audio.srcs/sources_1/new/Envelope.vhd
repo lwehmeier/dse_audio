@@ -5,6 +5,7 @@ use work.typedefs.all;
 use work.components.all;
 
 entity Envelope is
+    
     Port (
         -- Clock sources 
         CLK     : in STD_LOGIC;  -- System Clock
@@ -14,16 +15,9 @@ entity Envelope is
         
         -- Tone related
         -- the resolution for times is 2.66ms per step
-        -- TODO: Maybe add a lookup table to have exponential time steps
         NOTE_IN          : in note_t;                         -- Note Input
         SUSTAIN_VOLUME   : in env_volume_t;                       -- Sustain volume
-        ATTACK_TIME      : in std_logic_vector(7 downto 0);   -- Attack time
-        ATTACK_VOLUME    : in env_volume_t;                       -- Peak volume
-        DECAY_TIME       : in std_logic_vector(7 downto 0);   -- Decay time
-        RELEASE_TIME     : in std_logic_vector(7 downto 0);   -- Release time
-        ATTACK_INCREASE  : in env_volume_t;                       -- Volume per attack step to add
-        DECAY_DECREASE   : in env_volume_t;                       -- Volume per decay step to subtract
-        RELEASE_DECREASE : in env_volume_t;                       -- Volume per release step to subtract
+        PARAMS           : in envelope_params_t;
         
         -- Output volume
         VOL_OUT  : out volume_t;   -- Volume Output
@@ -98,11 +92,11 @@ begin
     if rising_edge(CLK) then
         case NEXT_STATE is -- use next state to prevent one cycle delay and therefore desync
             when ATTACK =>
-                TS_TOP_VAL <= ATTACK_TIME;
+                TS_TOP_VAL <= PARAMS.ATTACK_TIME;
             when DECAY => 
-                TS_TOP_VAL <= DECAY_TIME;
+                TS_TOP_VAL <= PARAMS.DECAY_TIME;
             when RELEASE =>
-                TS_TOP_VAL <= RELEASE_TIME;
+                TS_TOP_VAL <= PARAMS.RELEASE_TIME;
             when others =>
                 TS_TOP_VAL <= "11111111"; -- maximum top value for idle and sustain
         end case;
@@ -115,7 +109,7 @@ begin
         if NOTE = '1' and NOTE_IN /= CURRENT_NOTE then
             -- a new note should be sampled and the sampled note is NOT equal to the note we are currently processing
             if NOTE_IN = note_empty then
-                if RELEASE_TIME = x"00" or RELEASE_DECREASE = x"00" then -- no release was configured, so skip the release state entirely
+                if PARAMS.RELEASE_TIME = x"00" or PARAMS.RELEASE_DECREASE = x"00" then -- no release was configured, so skip the release state entirely
                     NEXT_STATE <= IDLE;
                     CURRENT_NOTE <= note_empty;
                     CURRENT_VOLUME <= env_volume_zero;
@@ -128,13 +122,13 @@ begin
                 CURRENT_SUSTAIN_VOLUME <= SUSTAIN_VOLUME;
                 
                 -- perform some special treatment to no attack and no decay 
-                if ATTACK_TIME = x"00" or ATTACK_INCREASE = x"00" then
-                    if DECAY_TIME = x"00" or DECAY_DECREASE = x"00" then
+                if PARAMS.ATTACK_TIME = x"00" or PARAMS.ATTACK_INCREASE = x"00" then
+                    if PARAMS.DECAY_TIME = x"00" or PARAMS.DECAY_DECREASE = x"00" then
                         NEXT_STATE <= SUSTAIN; -- no attack and no decay, so skip both states, go to sustain
                         CURRENT_VOLUME <= SUSTAIN_VOLUME;
                     else
                         NEXT_STATE <= DECAY; -- no attack, so skip attack state, go to decay, set attack_volume as initial volume
-                        CURRENT_VOLUME <= ATTACK_VOLUME;
+                        CURRENT_VOLUME <= PARAMS.ATTACK_VOLUME;
                     end if;
                 else
                     NEXT_STATE <= ATTACK;  -- attack and decay were configured, so begin at volume zero and go to attack state
@@ -145,32 +139,32 @@ begin
             case CURRENT_STATE is
                 when ATTACK =>
                     --do an addition with saturation logic
-                    if unsigned('0' & CURRENT_VOLUME) + unsigned('0' & ATTACK_INCREASE) >= unsigned('0' & ATTACK_VOLUME) then
-                        if DECAY_TIME = x"00" or DECAY_DECREASE = x"00" then
+                    if unsigned('0' & CURRENT_VOLUME) + unsigned('0' & PARAMS.ATTACK_INCREASE) >= unsigned('0' & PARAMS.ATTACK_VOLUME) then
+                        if PARAMS.DECAY_TIME = x"00" or PARAMS.DECAY_DECREASE = x"00" then
                             NEXT_STATE <= SUSTAIN;
                             CURRENT_VOLUME <= CURRENT_SUSTAIN_VOLUME;
                         else
                             NEXT_STATE <= DECAY; -- change state to decay
-                            CURRENT_VOLUME <= ATTACK_VOLUME; -- saturated volume
+                            CURRENT_VOLUME <= PARAMS.ATTACK_VOLUME; -- saturated volume
                         end if;
                     else
-                      CURRENT_VOLUME <= std_logic_vector(unsigned(CURRENT_VOLUME) + unsigned(ATTACK_INCREASE));
+                      CURRENT_VOLUME <= std_logic_vector(unsigned(CURRENT_VOLUME) + unsigned(PARAMS.ATTACK_INCREASE));
                       -- increase the volume by the volume given in ATTACK_INCREASE
                     end if;
                 when DECAY =>
-                    if signed('0' & CURRENT_VOLUME) - signed('0' & DECAY_DECREASE) <= signed('0' & CURRENT_SUSTAIN_VOLUME) then
+                    if signed('0' & CURRENT_VOLUME) - signed('0' & PARAMS.DECAY_DECREASE) <= signed('0' & CURRENT_SUSTAIN_VOLUME) then
                         NEXT_STATE <= SUSTAIN;
                         CURRENT_VOLUME <= CURRENT_SUSTAIN_VOLUME;
                     else
-                        CURRENT_VOLUME <= std_logic_vector(unsigned(CURRENT_VOLUME) - unsigned(DECAY_DECREASE));
+                        CURRENT_VOLUME <= std_logic_vector(unsigned(CURRENT_VOLUME) - unsigned(PARAMS.DECAY_DECREASE));
                     end if;
                 when RELEASE =>
-                    if signed('0' & CURRENT_VOLUME) - signed('0' & RELEASE_DECREASE) <= signed('0' & env_volume_zero) then
+                    if signed('0' & CURRENT_VOLUME) - signed('0' & PARAMS.RELEASE_DECREASE) <= signed('0' & env_volume_zero) then
                         NEXT_STATE <= IDLE;
                         CURRENT_NOTE <= note_empty;
                         CURRENT_VOLUME <= env_volume_zero;
                     else
-                        CURRENT_VOLUME <= std_logic_vector(unsigned(CURRENT_VOLUME) - unsigned(RELEASE_DECREASE));
+                        CURRENT_VOLUME <= std_logic_vector(unsigned(CURRENT_VOLUME) - unsigned(PARAMS.RELEASE_DECREASE));
                     end if;
                 when others => null; -- on sustain and idle, nothing should happen
             end case;

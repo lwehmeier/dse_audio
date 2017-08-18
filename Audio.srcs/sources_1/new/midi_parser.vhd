@@ -1,36 +1,7 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 16.08.2017 11:34:23
--- Design Name: 
--- Module Name: midi_parser - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 use work.typedefs.all;
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity midi_parser is
     Port ( rxData : in STD_LOGIC_VECTOR (7 downto 0);
@@ -38,61 +9,90 @@ entity midi_parser is
            note : out note_vector_t;
            volume : out env_volume_vector_t;
            note_ready : out STD_LOGIC_VECTOR (mix_channel_count-1 downto 0);
+           envelope_params : out envelope_params_vector_t;
            clk : in STD_LOGIC);
     type state_t is (STATE_CMD,STATE_BYTE1, STATE_BYTE2);  
+    type command_t is (CMD_NOTE_ON, CMD_NOTE_OFF, CMD_CUSTOM, CMD_INVALID);
 end midi_parser;
 
 architecture Behavioral of midi_parser is
 signal cstate : state_t := STATE_CMD;
-signal parsedPitch : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigned(0,8));
-signal parsedVelocity : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigned(0,8));
-signal noteOff : std_logic := '0';
+signal first_data : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigned(0,8));
+
+signal current_CMD : command_t := CMD_INVALID;
 signal currentChannel : unsigned(2 downto 0);
-signal note_ready_int : STD_LOGIC_VECTOR(mix_channel_count-1 downto 0) := std_logic_vector(to_unsigned(0, mix_channel_count));
+
 begin
 
 statemachine : process (CLK)
 begin
-    if rising_edge(clk) and newData='1' then
-        case cstate is
-            when STATE_CMD => 
-                    note_ready_int(to_integer(currentChannel)) <= '0';
+    if rising_edge(clk) then
+        note_ready <= (others => '0');
+        if newData = '1' then
+            case cstate is
+                when STATE_CMD => 
                     currentChannel <= unsigned(rxData(2 downto 0));
-                    if rxData(7 downto 4) = "1001" then
-                        cstate <= STATE_BYTE1;
-                        noteOff<='0';
-                    elsif rxData(7 downto 4) = "1000" then
-                        cstate <= STATE_BYTE1;
-                        noteOff<='1';
-                    end if;
-                
+                    case rxData(7 downto 4) is
+                        when x"8" => 
+                            current_CMD <= CMD_NOTE_OFF;
+                            cstate <= STATE_BYTE1;
+                        when x"9" =>
+                            current_CMD <= CMD_NOTE_ON;
+                            cstate <= STATE_BYTE1;
+                        when x"A" =>
+                            current_CMD <= CMD_CUSTOM;
+                            cstate <= STATE_BYTE1;
+                        when others =>
+                            current_CMD <= CMD_INVALID;
+                            cstate <= STATE_CMD;
+                    end case;
+            
                 when STATE_BYTE1 =>
                     cstate<=STATE_BYTE2;
-                    parsedPitch<=note_empty;
-                    if noteOff='0' then
-                        if rxData(7) = '0' then
-                            parsedPitch(6 downto 0) <= rxData(6 downto 0);
-                        end if;
-                    end if;
+                    first_data <= rxData;
                     
 
                 when STATE_BYTE2 =>
                     cstate<=STATE_CMD;
-                    parsedVelocity<=x"00";
-                    if noteOff='0' then
-                        if rxData(7) = '0' then
-                            parsedVelocity(7 downto 1) <= rxData(6 downto 0);
-                            volume(to_integer(currentChannel))(7 downto 1) <= rxData(6 downto 0);
-                        end if;
-                    else
-                        volume(to_integer(currentChannel)) <= env_volume_zero;
-                    end if;
-                    note(to_integer(currentChannel)) <= parsedPitch;
-                    note_ready_int(to_integer(currentChannel)) <= '1';
-                
+                    case current_CMD is
+                        when CMD_NOTE_ON => 
+                            note(to_integer(currentChannel)) <= '0' & first_data(6 downto 0);
+                            volume(to_integer(currentChannel)) <= rxData(6 downto 0) & '0';
+                            note_ready(to_integer(currentChannel)) <= '1';
+                        when CMD_NOTE_OFF =>
+                            note(to_integer(currentChannel)) <= note_empty;
+                            note_ready(to_integer(currentChannel)) <= '1';
+                            -- we need to keep the volume i think
+                        when CMD_CUSTOM => 
+                            case first_data(2 downto 0) is
+                                when x"0" =>
+                                    -- Parameter 0 is attack time
+                                    envelope_params(to_integer(currentChannel)).ATTACK_TIME <= rxData(6 downto 0) & '0';
+                                when x"1" =>
+                                    -- Parameter 1 is attack increase
+                                    envelope_params(to_integer(currentChannel)).ATTACK_INCREASE <= rxData(6 downto 0) & '0';
+                                when x"2" =>
+                                    -- Parameter 2 is attack peak level
+                                    envelope_params(to_integer(currentChannel)).ATTACK_VOLUME <= rxData(6 downto 0) & '0';
+                                when x"3" =>
+                                    -- Parameter 3 is decay time
+                                    envelope_params(to_integer(currentChannel)).DECAY_TIME <= rxData(6 downto 0) & '0';
+                                when x"4" =>
+                                    -- Parameter 4 is decay decrease
+                                    envelope_params(to_integer(currentChannel)).DECAY_DECREASE <= rxData(6 downto 0) & '0';
+                                when x"5" =>
+                                    -- Parameter 5 is release time
+                                    envelope_params(to_integer(currentChannel)).RELEASE_TIME <= rxData(6 downto 0) & '0';
+                                when x"6" =>
+                                    -- Parameter 6 is release decrease
+                                    envelope_params(to_integer(currentChannel)).RELEASE_DECREASE <= rxData(6 downto 0) & '0';
+                                when others => null; -- Parameter 7 is n/a
+                            end case;
+                        when others => null;
+                    end case;
                 when others => cstate <= STATE_CMD;
-        end case;
+            end case;
+        end if;
     end if;
 end process;
-note_ready <= note_ready_int;
 end Behavioral;

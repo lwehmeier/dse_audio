@@ -1,35 +1,6 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 14.08.2017 17:45:59
--- Design Name: 
--- Module Name: components - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.typedefs.all;
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 package components is
 
@@ -47,6 +18,7 @@ component midi_parser is
            note : out note_vector_t;
            volume : out env_volume_vector_t;
            note_ready : out STD_LOGIC_VECTOR (mix_channel_count - 1 downto 0);
+           envelope_params : out envelope_params_vector_t;
            clk : in STD_LOGIC);  
 end component;
 component DAC is
@@ -116,16 +88,9 @@ component Envelope is
         
         -- Tone related
         -- the resolution for times is 2.66ms per step
-        -- TODO: Maybe add a lookup table to have exponential time steps
         NOTE_IN        : in note_t;                         -- Note Input
-        SUSTAIN_VOLUME : in env_volume_t;                       -- Sustain volume
-        ATTACK_TIME    : in std_logic_vector(7 downto 0);   -- Attack time
-        ATTACK_VOLUME  : in env_volume_t;                       -- Peak volume
-        DECAY_TIME     : in std_logic_vector(7 downto 0);   -- Decay time
-        RELEASE_TIME   : in std_logic_vector(7 downto 0);   -- Release time
-        ATTACK_INCREASE  : in env_volume_t;                       -- Volume per attack step to add
-        DECAY_DECREASE   : in env_volume_t;                       -- Volume per decay step to subtract
-        RELEASE_DECREASE : in env_volume_t;                       -- Volume per release step to subtract
+        SUSTAIN_VOLUME : in env_volume_t;                   -- Sustain volume
+        PARAMS         : in envelope_params_t;              -- Parameters
         
         -- Output volume
         VOL_OUT  : out volume_t;   -- Volume Output
