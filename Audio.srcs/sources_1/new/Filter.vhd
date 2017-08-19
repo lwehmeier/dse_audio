@@ -1,36 +1,13 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 14.08.2017 17:16:30
--- Design Name: 
--- Module Name: Filter - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
 use work.typedefs.all;
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+
+
+-- optional filter stage
+-- current implementation: pass through dummy to allow for future extensions
+-- adds 1 CE latency to sound generator pipeline
+-- instantiated between waveform generators and mixer and between mixer and dac
 
 entity Filter is
 generic (
@@ -46,7 +23,7 @@ architecture Behavioral of Filter is
 begin
     process (CLK)
     begin
-        if rising_edge(CLK) then
+        if rising_edge(CLK) and CE='1' then
             PCM_OUT <= PCM_IN;
         end if;
     end process;

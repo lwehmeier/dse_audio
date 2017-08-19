@@ -2,6 +2,17 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
+-- pulse generator for 48kHz sample frequency
+-- actually a fully configurable CE pulse generator, not fixed to 48kHz
+
+-- GCLK: system clock
+-- OUTPUT: CE signal output, pulse length: 1 system clock period
+-- ENABLE: enable signal for internal counter
+-- RESET: reset internal counter
+-- TOP_VAL: maximum counter value, on overflow a CE pulse is generated
+
+-- BIT_WIDTH: generic, counter width for internal timer
+
 entity CEGEN48k is
     Generic (
         BIT_WIDTH : integer := 16

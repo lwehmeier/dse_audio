@@ -2,6 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.typedefs.all;
 
+-- definitions for all components used on top level design
+-- does not contain modul-internal component definitions such as sine tables
+-- for detailed module descriptions see the corresponding modules
+
 package components is
 
 component UART_RX_CTRL is
