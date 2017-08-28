@@ -1,3 +1,5 @@
+-- Martin Koppehel
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -16,8 +18,8 @@ entity Envelope is
         -- Tone related
         -- the resolution for times is 2.66ms per step
         NOTE_IN          : in note_t;                         -- Note Input
-        SUSTAIN_VOLUME   : in env_volume_t;                       -- Sustain volume
-        PARAMS           : in envelope_params_t;
+        SUSTAIN_VOLUME   : in env_volume_t;                   -- Sustain volume
+        PARAMS           : in envelope_params_t;              -- Ramp shape information, can be changed during runtime
         
         -- Output volume
         VOL_OUT  : out volume_t;   -- Volume Output
@@ -37,13 +39,20 @@ type envelope_state_t is (IDLE, ATTACK, DECAY, SUSTAIN, RELEASE);
 signal CURRENT_STATE : envelope_state_t := IDLE;
 signal NEXT_STATE : envelope_state_t := IDLE;
 
+-- This signal is '1' every clock cycle when a timestep should be performed
 signal TIMESTEP : STD_LOGIC := '0';
+-- This signal is '1' every clock cycle when the ramp value should be updated
 signal INCREASE : STD_LOGIC := '0';
+-- This signal should be set to '1' when the user wants to reset the timers
 signal TS_RESET : STD_LOGIC := '0';
+-- The maximum value the INCREASE_TIMER should have, this is set by the state logic according to the current state.
 signal TS_TOP_VAL : STD_LOGIC_VECTOR(7 downto 0);
 
+-- The note at the output
 signal CURRENT_NOTE : note_t := note_empty;
+-- The sampled volume, this needs to be cached because once the key is released, this value is needed again
 signal CURRENT_SUSTAIN_VOLUME : env_volume_t := env_volume_zero;
+-- The volume at the output
 signal CURRENT_VOLUME : env_volume_t := env_volume_zero;
 begin
 -- Timestep generation
@@ -71,6 +80,8 @@ TIMER_TS :  CEGEN48k
             );
 
 -- FSM state transition process
+-- This process checks whether a state transition should be performed
+-- and updates the state 
 STATE_TRANSITION : process (CLK) 
 begin 
       if rising_edge(CLK) then 
@@ -103,6 +114,7 @@ begin
     end if;
 end process;
 
+-- This process generates the ramp based on the env_params_t structure this entity has as input
 STATE_DECODE : process (CLK)
 begin
     if rising_edge(CLK) then
@@ -152,6 +164,7 @@ begin
                       -- increase the volume by the volume given in ATTACK_INCREASE
                     end if;
                 when DECAY =>
+                    -- do a subtraction with saturation logic
                     if signed('0' & CURRENT_VOLUME) - signed('0' & PARAMS.DECAY_DECREASE) <= signed('0' & CURRENT_SUSTAIN_VOLUME) then
                         NEXT_STATE <= SUSTAIN;
                         CURRENT_VOLUME <= CURRENT_SUSTAIN_VOLUME;
@@ -172,6 +185,7 @@ begin
     end if; 
 end process;
 
+-- Outputs 
 VOL_OUT <= '0' & CURRENT_VOLUME;
 NOTE_OUT <= CURRENT_NOTE;
 end Behavioral;

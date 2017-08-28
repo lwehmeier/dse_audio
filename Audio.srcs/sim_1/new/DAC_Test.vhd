@@ -1,8 +1,12 @@
+-- Martin Koppehel
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use work.typedefs.all;
 use work.components.all;
+
+-- Unit test of the DAC entity
 
 entity DAC_Test is
 end DAC_Test;
@@ -10,11 +14,13 @@ end DAC_Test;
 architecture Behavioral of DAC_Test is
 
 -- signal definitions
-signal GCLK      : std_logic  := '0';
-signal CE        : std_logic  := '0';
-signal PCM_DATA  : pcm_data_t := to_pcm_data_t(0);
-signal ENABLE    : std_logic  := '0';
-signal DAC_OUT   : std_logic  := '0';
+signal GCLK      : std_logic  := '0'; -- System clock
+signal CE        : std_logic  := '0'; -- Sample rage
+signal PCM_DATA  : pcm_data_t := to_pcm_data_t(0); -- PCM temporary value
+signal ENABLE    : std_logic  := '0'; -- Enable for the CE generator
+signal DAC_OUT   : std_logic  := '0'; -- DAC output signal
+
+-- To be used with a waveform configuration where the PCM value is shown as graph
 
 begin
 -- Instantiate components

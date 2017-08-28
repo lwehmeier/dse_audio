@@ -1,8 +1,12 @@
+-- Martin Koppehel
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use work.typedefs.all;
 use work.components.all;
+
+-- Test bench for the envelope volume generator
 
 entity EnvTest is
 end EnvTest;
@@ -10,21 +14,23 @@ end EnvTest;
 architecture Behavioral of EnvTest is
 
 -- signal definitions
-signal GCLK       : std_logic  := '0';
-signal CE         : std_logic  := '0';
-signal ENABLE     : std_logic  := '0';
-signal NOTE_READY : std_logic  := '0';
-signal NOTE       : note_t     := note_empty;
-signal SUSTAIN_V  : volume_t   := volume_zero;
-signal ATTACK_V   : volume_t   := volume_zero;
-signal ATTACK_T   : std_logic_vector(7 downto 0) := x"00";
-signal DECAY_T    : std_logic_vector(7 downto 0) := x"00";
-signal RELEASE_T  : std_logic_vector(7 downto 0) := x"00";
-signal ATTACK_S   : volume_t := to_volume_t(2);
-signal DECAY_S    : volume_t := to_volume_t(1);
-signal RELEASE_S  : volume_t := to_volume_t(1);
-signal NOTE_OUT   : note_t     := note_empty;
-signal VOL_OUT    : volume_t   := volume_zero;
+signal GCLK       : std_logic  := '0'; -- System clock
+signal CE         : std_logic  := '0'; -- Sample rate
+signal ENABLE     : std_logic  := '0'; -- Timer enable signal
+signal NOTE_READY : std_logic  := '0'; -- Signal to indicate that a note signal is ready and can be sampled
+signal NOTE       : note_t     := note_empty; -- The note which should be played
+signal SUSTAIN_V  : volume_t   := volume_zero; -- The volume the note should be played
+signal ATTACK_V   : volume_t   := volume_zero; -- The attack volume
+signal ATTACK_T   : std_logic_vector(7 downto 0) := x"00"; -- Attack time
+signal DECAY_T    : std_logic_vector(7 downto 0) := x"00"; -- Decay time 
+signal RELEASE_T  : std_logic_vector(7 downto 0) := x"00"; -- Release time
+signal ATTACK_S   : volume_t := to_volume_t(2); -- Attack step, used to generate more steep ramps
+signal DECAY_S    : volume_t := to_volume_t(1); -- Decay step, used to generate more steep ramps
+signal RELEASE_S  : volume_t := to_volume_t(1); -- Release step, used to generate more steep ramps
+signal NOTE_OUT   : note_t     := note_empty; -- Note output of the envelope generator 
+signal VOL_OUT    : volume_t   := volume_zero; -- Volume output of the envelope generator
+
+-- Please note that this test bench isn't working anymore, it needs to be adapted using the new env_params_t structure
 
 begin
 -- Instantiate components
