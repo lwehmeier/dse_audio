@@ -3,10 +3,12 @@
 import sys;
 
 def main():
+    # the period times in clock enable cycles for the notes c, d, e, f, g, a, b
     periods = [183, 173, 163, 154, 146, 137, 130, 122, 116, 109, 103, 97]
     pcm_min = -32768
     pcm_max = 32767
 
+    # generate vhdl code for a LUT containing a saw waveform for all listed periods
     print ("library IEEE;")
     print ("use IEEE.STD_LOGIC_1164.ALL;")
     print ("use work.typedefs.all;")
@@ -35,9 +37,10 @@ def main():
     print ("    begin")
     print ("        case to_integer(period) is")
 
-    for period in periods:    
+    # generate a convenience function that maps a period to a lut entry
+    for period in periods:
         print ("            when {} => return lut_{}(to_integer(counter));".format(period, period))
-    
+
     print ("            when others => return to_signed(0, pcm_data_t'length);")
     print ("        end case;")
     print ("    end counter_over_period;")
@@ -45,4 +48,3 @@ def main():
     print ("")
 
 main()
-

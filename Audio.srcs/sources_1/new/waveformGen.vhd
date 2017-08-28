@@ -1,21 +1,21 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
+-- Company:
+-- Engineer:
+--
 -- Create Date: 14.08.2017 17:02:01
--- Design Name: 
+-- Design Name:
 -- Module Name: waveformGen - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
+-- Project Name:
+-- Target Devices:
+-- Tool Versions:
+-- Description:
+--
+-- Dependencies:
+--
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+--
 ----------------------------------------------------------------------------------
 
 
@@ -53,7 +53,7 @@ architecture behav of waveformGen is
     signal counter: unsigned(sample_rate'length - 1 downto 0) := to_unsigned(0, sample_rate'length);
     -- The sample count of one period of the current note
     signal period: unsigned(sample_rate'length - 1 downto 0) := to_unsigned(0, sample_rate'length);
-    
+
     component soundgen_square is
         port (
             clk: in std_logic;
@@ -65,7 +65,7 @@ architecture behav of waveformGen is
             reset: in std_logic
         );
     end component;
-    
+
     component soundgen_triangle is
         port (
             clk: in std_logic;
@@ -77,7 +77,7 @@ architecture behav of waveformGen is
             reset: in std_logic
         );
     end component;
-    
+
     component soundgen_saw is
         port (
             clk: in std_logic;
@@ -89,7 +89,7 @@ architecture behav of waveformGen is
             reset: in std_logic
         );
     end component;
-    
+
     component soundgen_sine is
         port (
             clk: in std_logic;
@@ -101,7 +101,7 @@ architecture behav of waveformGen is
             reset: in std_logic
         );
     end component;
-    
+
     component soundgen_noise is
         port (
             clk: in std_logic;
@@ -123,7 +123,7 @@ begin
             reset => reset
         );
     end generate square_gen;
-    
+
     triangle_gen: if wg_type = wg_TRIANGLE generate
         triangle: soundgen_triangle port map (
             clk => clk,
@@ -135,7 +135,7 @@ begin
             reset => reset
         );
     end generate triangle_gen;
-    
+
     saw_gen: if wg_type = wg_SAW generate
         saw: soundgen_saw port map (
             clk => clk,
@@ -157,7 +157,7 @@ begin
             reset => reset
         );
     end generate noise_gen;
-    
+
     sine_gen: if wg_type = wg_SINE generate
         sine: soundgen_sine port map (
             clk => clk,
@@ -178,9 +178,12 @@ begin
                 counter <= to_unsigned(0, sample_rate'length);
                 period <= to_unsigned(0, sample_rate'length);
             elsif ce = '1' then
+                -- Create the counter counting from 0 to the period length
+                -- This is used in the waveform generators for index
+                -- calculation in the luts.
                 my_period := to_unsigned(period_from_note(note), sample_rate'length);
                 period <= my_period;
-        
+
                 if counter < my_period then
                     counter <= counter + 1;
                 else

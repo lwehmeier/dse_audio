@@ -1,21 +1,21 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
+-- Company:
+-- Engineer:
+--
 -- Create Date: 15.08.2017 13:41:53
--- Design Name: 
+-- Design Name:
 -- Module Name: soundgen_square - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
+-- Project Name:
+-- Target Devices:
+-- Tool Versions:
+-- Description:
+--
+-- Dependencies:
+--
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+--
 ----------------------------------------------------------------------------------
 
 
@@ -49,6 +49,7 @@ entity soundgen_sine is
 end soundgen_sine;
 
 -- The architecture for the sine sound generator
+-- The calculation needs 2 clock cycles.
 architecture behav of soundgen_sine is
 signal reg: pcm_data_t;
 begin
@@ -63,7 +64,7 @@ begin
             end if;
         end if;
     end process;
-    
+
     process (clk)
     begin
         if rising_edge(clk) then

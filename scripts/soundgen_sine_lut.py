@@ -3,8 +3,11 @@
 import sys;
 
 def main():
+    # the period times in clock enable cycles for the notes c, d, e, f, g, a, b
     periods = [183, 173, 163, 154, 146, 137, 130, 122, 116, 109, 103, 97]
 
+    # generate vhdl code for a LUT containing the sine indices for all listed periods
+    #  > the sine lut ranges from 0 to 511 entries
     print ("library IEEE;")
     print ("use IEEE.STD_LOGIC_1164.ALL;")
     print ("use work.typedefs.all;")
@@ -13,6 +16,7 @@ def main():
     print ("package soundgen_sine_lut is")
     print ("    subtype sample_rate_t is unsigned(sample_rate'length - 1 downto 0);")
 
+    # generate indices for each period for the sine lut
     for period in periods:
         print ("")
         print ("    type sample_rate_{}_t is array(0 to {}) of sample_rate_t;".format(period, period))
@@ -33,9 +37,10 @@ def main():
     print ("    begin")
     print ("        case to_integer(period) is")
 
-    for period in periods:    
+    # generate convenience function to map periods to sine indices
+    for period in periods:
         print ("            when {} => return lut_{}(to_integer(counter));".format(period, period))
-    
+
     print ("            when others => return to_unsigned(0, sample_rate_t'length);")
     print ("        end case;")
     print ("    end counter_over_period;")
@@ -43,4 +48,3 @@ def main():
     print ("")
 
 main()
-
